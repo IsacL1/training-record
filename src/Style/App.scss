@@ -1,12 +1,13 @@
-$timing-function   : cubic-bezier(0.190, 1.000, 0.220, 1.000);
+$timing-function : cubic-bezier(0.190, 1.000, 0.220, 1.000);
 $nav-width-desktop : 40em;
-$nav-width-mobile  : 25em;
-$nav-item-nb       : 6;
+$nav-width-mobile : 25em;
+$nav-item-nb : 6;
 
 input {
 	position: fixed;
 	opacity: 0;
 }
+
 label {
 	position: absolute;
 	margin: 0;
@@ -15,6 +16,7 @@ label {
 	outline: none;
 	background: none;
 	cursor: pointer;
+
 	&::before {
 		position: fixed;
 		z-index: 1;
@@ -22,12 +24,13 @@ label {
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background-color: rgba(darken(#3498db,40%),.75);
+		background-color: rgba(darken(#3498db, 40%), .75);
 		content: '';
 		opacity: 0;
 		pointer-events: none;
 		transition: opacity .5s $timing-function;
 	}
+
 	.burger {
 		position: fixed;
 		top: 1em;
@@ -38,9 +41,11 @@ label {
 		margin: 0;
 		padding: 0;
 		transition: opacity .5s $timing-function;
+
 		&::before,
 		.bar,
-		&::after {	// menu button
+		&::after {
+			// menu button
 			position: absolute;
 			left: 0;
 			display: block;
@@ -50,21 +55,27 @@ label {
 			content: '';
 			transition: all .5s $timing-function;
 		}
-		.bar {	// middle bar position
+
+		.bar {
+			// middle bar position
 			top: 44%;
 		}
-		&::before {	// top bar 
+
+		&::before {
+			// top bar 
 			top: 0;
 			transform-origin: top left;
 		}
-		&::after {	// bottom bar 
+
+		&::after {
+			// bottom bar 
 			bottom: 0;
 			transform-origin: bottom left;
 		}
 	}
 }
 
-input:focus + label,
+input:focus+label,
 label:hover {
 	.burger {
 		opacity: .75;
@@ -81,15 +92,17 @@ nav {
 	flex-flow: column nowrap;
 	justify-content: center;
 	align-items: flex-start;
-	transform: translate3d(0,0,0); /* material acceleration */
+	transform: translate3d(0, 0, 0);
+	/* material acceleration */
 	transform: translateX(-100%);
 	will-change: transform;
 	transition: transform .5s $timing-function;
+
 	&::before {
 		position: absolute;
 		top: 0;
 		bottom: 0;
-		left: 0; 
+		left: 0;
 		z-index: -1;
 		width: $nav-width-mobile;
 		background: #d62956;
@@ -98,11 +111,14 @@ nav {
 		transform-origin: bottom left;
 		will-change: transform;
 		transition: transform .5s $timing-function;
+
 		@media(min-width: 40em) {
 			width: $nav-width-desktop;
 		}
 	}
-	a { // Link
+
+	a {
+		// Link
 		margin: .5em 0;
 		padding: .2em 2em;
 		font-size: 1.5em;
@@ -112,10 +128,16 @@ nav {
 		transform: translateX(-100%);
 		transition: color .15s, transform .5s;
 		transition-timing-function: $timing-function;
+
 		@for $i from 1 through $nav-item-nb {
-			&:nth-child(#{$i}) { transition-delay: 0s, #{50 + (50 * $i)}ms; }	
+			&:nth-child(#{$i}) {
+				transition-delay: 0s,
+				#{50 + (50 * $i)}ms;
+			}
 		}
-		&:hover, &:focus {
+
+		&:hover,
+		&:focus {
 			color: black;
 		}
 	}
@@ -124,63 +146,130 @@ nav {
 // main body
 main {
 	overflow: hidden;
+
 	.content {
-		transform: translate3d(0,0,0); /* material acceleration */
+		transform: translate3d(0, 0, 0);
+		/* material acceleration */
 		will-change: transform, filter;
 		transition: all .5s $timing-function;
+	}
+
+	.Container {
+		.form {
+			font: 1em sans-serif;
+			font-size: 50px;
+			font-weight: bold;
+			background-color: #f2f2f2;
+			padding: 2rem;
+			border: 1px solid #ccc;
+			border-radius: 50px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+			&>input[type="text"],
+			input[type="number"] {
+				width: 100%;
+				height: 40px;
+				margin-bottom: 20px;
+				padding: 10px;
+				border: 1px solid #ccc;
+				border-radius: 8px;
+			}
+
+			&>button {
+				font-size: 2rem;
+				background-color: #FFFFFF;
+			}
+		}
 	}
 }
 
 [id="navcheck"]:checked {
-	& + label {
+	&+label {
 		&::before {
 			opacity: 1;
 			pointer-events: auto;
 		}
+
 		.burger {
+
 			&::before,
 			&::after {
 				width: 141.42%; // Pythagore!
 			}
+
 			&::before {
 				transform: rotate(45deg) translateY(-50%);
 			}
+
 			&::after {
 				transform: rotate(-45deg) translateY(50%);
 			}
+
 			.bar {
 				transform: scale(0.1);
 			}
 		}
 	}
-	& ~ nav {
+
+	&~nav {
 		transform: translateX(0);
+
 		&::before {
 			transform: skewX(15deg) translateX(0);
 		}
+
 		a {
 			transform: translateX(0);
 		}
 	}
-	& ~ main .content {
+
+	&~main .content {
 		transform: translateX(3em);
 		transform-origin: left center;
 		filter: blur(2px);
 	}
 }
 
-Container{
-	
-}
 
 /* helper */
-.visuallyhidden { border:0; clip:rect(0 0 0 0);	height:1px; margin:-1px; overflow:hidden; padding:0; position:absolute; width:1px; }
+.visuallyhidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
 
 /* misc */
-body { overflow-x: hidden; background: #444; color: white; font: 1em/1.4 "lato"; }
-main { background: #3498db; padding: 5% 0; }
-article { width: 80%; margin: 0 auto; font-size: 1.3em; @media(min-width: 60em) { width: 50%; } }
-h1 { font: 2.5em/1.4 "roboto condensed"; font-weight: 700; }
+body {
+	overflow-x: hidden;
+	background: #444;
+	color: white;
+	font: 1em/1.4 "lato";
+}
+
+main {
+	background: #3498db;
+	padding: 5% 0;
+}
+
+article {
+	width: 80%;
+	margin: 0 auto;
+	font-size: 1.3em;
+
+	@media(min-width: 60em) {
+		width: 50%;
+	}
+}
+
+h1 {
+	font: 2.5em/1.4 "roboto condensed";
+	font-weight: 700;
+}
 
 /*
  @media (prefers-reduced-motion: no-preference) {

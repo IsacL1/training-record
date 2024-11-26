@@ -1,20 +1,21 @@
 import { Route, Routes } from 'react-router-dom';
 import Navbar from './Component/Navbar';
-import './Style/App.scss';
+//import './Style/App.scss';
+import './Style/temp.scss';
 import SlideRecord from './Pages/SlideRecord';
 import SpeedSlalomRecord from './Pages/SpeedSlalomRecord';
-import Home from './Pages/Home';
 
-const App = () => {
+
+const Home = () => {
   return (
-    <div className='App'>
-        <div className='Nav' style={{width: "2rem"}}>
+    <div className='Home'>
+        <div className='Nav'>
           <Navbar />
         </div>
       <main>
-        <div className='Container' style={{width: "2rem"}}>
+        <div className='Container'>
           <Routes>
-            <Route path="/Pages/Home" element={<Home />} />
+            <Route path="/Home" element={<Home />} />
             <Route path="/Pages/SlideRecord" element={<SlideRecord />} />
             <Route path="/Pages/SpeedSlalomRecord" element={<SpeedSlalomRecord />} />
           </Routes>
@@ -24,4 +25,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Home;
