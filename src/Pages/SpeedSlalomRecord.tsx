@@ -41,18 +41,29 @@ const SpeedSlalom = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Calculate the result and keep 3 decimal places
-    const result = SpeedSlalomForm.time + ((SpeedSlalomForm.missedCone + SpeedSlalomForm.kickedCone) * 0.2).toFixed(3);
+    const result = (Number(SpeedSlalomForm.time) + ((Number(SpeedSlalomForm.missedCone) + Number(SpeedSlalomForm.kickedCone)) * 0.2)).toFixed(3);
+
     console.log(SpeedSlalomForm);
-    setSpeedSlalomForm({ ...SpeedSlalomForm, result});
+    setSpeedSlalomForm({ ...SpeedSlalomForm, result });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSpeedSlalomForm({ ...SpeedSlalomForm, [event.target.name]: event.target.value });
+
+    if (event.target.name === 'endline') {
+      setSpeedSlalomForm({ ...SpeedSlalomForm, endLine: event.target.checked });
+    } else {
+      setSpeedSlalomForm({ ...SpeedSlalomForm, [event.target.name]: event.target.value });
+    }
   };
-  const [dateV, setdateV] = useState<string>('');  
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setdateV(e.target.value);
-  };
+
+  // Calculate and test the output
+  /*
+  const Cal = () => {
+    const result = (Number(SpeedSlalomForm.time) + ((Number(SpeedSlalomForm.missedCone) + Number(SpeedSlalomForm.kickedCone)) * 0.2)).toFixed(3);
+    return result;
+  }
+  */
 
   return (
     <div className='main'><h1 className='tittle'>Speed Slalom</h1>
@@ -62,7 +73,7 @@ const SpeedSlalom = () => {
         </label>
         <br />
         <label>
-          Date: <input type="date" name="date" id="inputType" value={SpeedSlalomForm.date || new Date().toISOString().split('T')[0]} onChange={handleInputChange} />
+          Date: <input type="date" name="date" id="inputType" value={SpeedSlalomForm.date || new Date().toISOString().split('T')[0]} onChange={handleChange} />
         </label>
         <br />
         <label>
@@ -78,29 +89,32 @@ const SpeedSlalom = () => {
         </label>
         <br />
         <label>
-          Missed: <input type="number" name="missedCone" id="inputType" value={SpeedSlalomForm.missedCone==null?0:SpeedSlalomForm.missedCone} onChange={handleChange} />
+          Missed: <input type="number" name="missedCone" id="inputType" value={SpeedSlalomForm.missedCone == null ? 0 : SpeedSlalomForm.missedCone} onChange={handleChange} />
         </label>
         <br />
         <label>
-          Kicked: <input type="number" name="kickedCone" id="inputType" value={SpeedSlalomForm.kickedCone==null?0:SpeedSlalomForm.kickedCone} onChange={handleChange} />
+          Kicked: <input type="number" name="kickedCone" id="inputType" value={SpeedSlalomForm.kickedCone == null ? 0 : SpeedSlalomForm.kickedCone} onChange={handleChange} />
         </label>
         <br />
         <label>
-          End line: <input type="checkbox" name="endline" id="inputType" checked={SpeedSlalomForm.endLine===null?false:SpeedSlalomForm.endLine} onChange={handleChange} />
+          End line: <input type="checkbox" name="endline" id="inputType" checked={SpeedSlalomForm.endLine} onChange={handleChange} />
         </label>
+        <br />
+        <label>{/* checkbox default true? */}
+          <p>DQ: {Number(SpeedSlalomForm.kickedCone) + Number(SpeedSlalomForm.missedCone) > 4 || SpeedSlalomForm.endLine ? 'Yes' : 'No'}</p></label>
         <br />
         <p>
           Result:  <input type="text" name="result" id="inputType" value={SpeedSlalomForm.result} onChange={handleChange} disabled />
         </p>
         <br />
-        <label><p>
-          DQ:  <input type="checkbox" name="DQ" id="inputType" checked={((SpeedSlalomForm.kickedCone + SpeedSlalomForm.missedCone) > 4) || (SpeedSlalomForm.endLine===true)?SpeedSlalomForm.DQ===true:SpeedSlalomForm.DQ===false} onChange={handleChange} disabled />
-        </p></label>
-        <br />
+
         <button type="submit">Submit</button>
-        {dateV}
+        <br />
+        {/* to test output
+        <p>{Cal()}</p>
+        */}
       </form>
-    
+
 
       <div>
         {athletes.map((athlete, index) => (
