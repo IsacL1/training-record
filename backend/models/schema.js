@@ -1,38 +1,133 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const athletesSchema = new mongoose.Schema({
-    name: String,
-    email: String,
+const athletesInfoSchema = new mongoose.Schema({
+    athletesId: String,
+    athletesName: String,
+    bod: date,
     phone: String,
     password: String,
     addr: String,
-    HKID4digit: String,
+    HKID4digit: String
+})
 
-});
+const classicSlalomSchema = new mongoose.Schema({
+    trickName: String,
+    level: String,
+    family: String,
+    cones: Number,
+    notes: String,
+})
 
-const speedSlalomRecordSchema = new mongoose.Schema({
-    athletes: [
+const SlideSchema = new mongoose.Schema({
+    trickName: String,
+    level: String,
+    family: String,
+    length: Number,
+    notes: String
+})
+
+const offSkateExerciseSchema = new mongoose.Schema({
+    exerciseName: String,
+    set: Number,
+    reps: Number,
+    weight: Number,
+    totalSet: Number,
+    totalReps: Number,
+    totalWeight: Number,
+    notes: String,
+})
+
+
+const athletesCurrentAbilityValueSchema = new mongoose.Schema({
+    athletesName: String,
+    CurrentAbilityValue: [{
+        date: Date,
+        weight: Number,
+        height: Number,
+        timedRun9min: Number,
+        verticalJump: Number,
+        longJump: Number,
+        sqaut: Number
+    }]
+})
+
+// Goals for speed slalom, slide and classic slalom
+const goalsSchema = new mongoose.Schema({
+    athletesName: String,
+    goals: [
         {
-            name: String,
-            records: [
+            SpeedSlalom: [
+                {
+                    date: string,
+                    side: string,
+                    step: number,
+                    time: number,
+                    missedCone: number,
+                    kickedCone: number,
+                    DQ: boolean,
+                    endLine: boolean,
+                    result: number,
+                    notes: string,
+                }
+            ],
+            Slide: [
                 {
                     date: String,
-                    side: String,
-                    step: Number,
-                    time: Number,
-                    missedCone: Number,
-                    kickedCone: Number,
-                    DQ: Boolean,
-                    endLine: Boolean,
-                    result: Number,
-                    notes: String
+                    trickName: String,
+                    level: String,
+                    family: String,
+                    length: Number,
+                    notes: String,
+                }
+            ],
+            ClassicSlalom: [
+                {
+                    date: String,
+                    trickName: String,
+                    level: String,
+                    family: String,
+                    cones: Number,
+                    notes: String,
+                }
+            ],
+            offSkateExercise: [
+                {
+                    date: String,
+                    exerciseName: String,
+                    set: Number,
+                    reps: Number,
+                    weight: Number,
+                    totalSet: Number,
+                    totalReps: Number,
+                    totalWeight: Number,
+                    notes: String,
                 }
             ]
         }
     ]
-});
+})
 
-const AthletesModel = mongoose.model('Athletes', athletesSchema);
-const SpeedSlalomRecordModel = mongoose.model('SpeedSlalomRecord', speedSlalomRecordSchema);
+const athletesRecordsSchema = new mongoose.Schema({
+    athletesName: String,
+    athletesCurrentAbilityValue: [],
+    SSRrecords: [],
+    CSRecords: [],
+    SlideRecords: [],
+    offSkateExercise: [],
+    goals: []
+})
 
-module.exports = { AthletesModel, SpeedSlalomRecordModel };
+
+const athletesInfoModel = mongoose.model('AthletesInfo', athletesInfoSchema)
+const classicSlalomModel = mongoose.model('ClassicSlalom', classicSlalomSchema)
+const SlideModel = mongoose.model('Slide', SlideSchema)
+const offSkateExerciseModel = mongoose.model('offSkateExercise', offSkateExerciseSchema)
+const goalsModel = mongoose.model('Goals', goalsSchema)
+const athletesCurrentAbilityValueModel = mongoose.model('AthletesCurrentAbilityValue', athletesCurrentAbilityValueSchema)
+const athletesRecordsModel = mongoose.model('Athletes', athletesRecordsSchema)
+
+module.exports = {
+    athletesInfoModel, classicSlalomModel,
+    SlideModel, offSkateExerciseModel, goalsModel,
+    athletesCurrentAbilityValueModel, athletesRecordsModel
+}
