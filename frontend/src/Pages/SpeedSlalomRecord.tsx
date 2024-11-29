@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Athletes } from '../Model/Interface';
+import axios from 'axios';
 
 interface SpeedSlalomForm {
   AthleteName: string;
-  date: any;
+  date: Date;
   side: "L" | "R";
   step: number;
   time: number;
@@ -12,33 +13,38 @@ interface SpeedSlalomForm {
   kickedCone: number;
   DQ: boolean;
   endLine: boolean;
-  result: any;
+  SSResult: any;
   notes?: string;
 }
 
 const SpeedSlalom = () => {
-  const [Athletes, setAthletes] = useState<Athletes[]>([]);
+  //const [Athletes, setAthletes] = useState<Athletes[]>([]);
 
   const [SpeedSlalomForm, setSpeedSlalomForm] = useState<SpeedSlalomForm>({
-    AthleteName: '', date: '', side: 'L', step: 0, time: 0.0,
-    missedCone: 0, kickedCone: 0, DQ: false, endLine: false, result: 0.000, notes: ''
+    AthleteName: '', 
+    date: new Date(), 
+    side: 'L', 
+    step: 0, 
+    time: 0.0,
+    missedCone: 0, 
+    kickedCone: 0, 
+    DQ: false, 
+    endLine: false, 
+    SSResult: 0.000, 
+    notes: ''
   });
-
-  useEffect(() => {
-    fetch('src/Data/SpeedSlalomForm.json')
-      .then(response => response.json())
-      .then(data => setAthletes(data.athletes));
-  }, []);
-
 
   // Handle submit - SpeedSlalom form 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    
+  console.log('handleSubmit called');
     event.preventDefault();
     // Calculate the result and keep 3 decimal places
-    const result = (Number(SpeedSlalomForm.time) + ((Number(SpeedSlalomForm.missedCone) + Number(SpeedSlalomForm.kickedCone)) * 0.2)).toFixed(3);
+    const SSresult = (Number(SpeedSlalomForm.time) + ((Number(SpeedSlalomForm.missedCone) + Number(SpeedSlalomForm.kickedCone)) * 0.2)).toFixed(3);
 
     console.log(SpeedSlalomForm);
-    setSpeedSlalomForm({ ...SpeedSlalomForm, result: parseFloat(result) });
+    setSpeedSlalomForm({ ...SpeedSlalomForm, SSResult: parseFloat(SSresult) });
+    console.log(SSresult);
 
     // Validate the data
     if (!SpeedSlalomForm.AthleteName || !SpeedSlalomForm.date || !SpeedSlalomForm.side || !SpeedSlalomForm.step || !SpeedSlalomForm.time) {
@@ -51,13 +57,42 @@ const SpeedSlalom = () => {
       return;
     }
 
+    const speedSlalomData = {
+      athletesName: SpeedSlalomForm.AthleteName,
+      SSRecords: [{
+        date: SpeedSlalomForm.date,
+        side: SpeedSlalomForm.side,
+        step: SpeedSlalomForm.step,
+        time: SpeedSlalomForm.time,
+        missedCone: SpeedSlalomForm.missedCone,
+        kickedCone: SpeedSlalomForm.kickedCone,
+        DQ: SpeedSlalomForm.DQ,
+        endLine: SpeedSlalomForm.endLine,
+        SSRresult: SpeedSlalomForm.SSResult,
+        notes: SpeedSlalomForm.notes,
+      }]
+    };
+
+    // Send data to server
+    axios.post('http://localhost:3001/api/addSSRecord', speedSlalomData)
+      .then((response) => {
+        console.log(response.data);
+        toast.success('Data submitted successfully!');
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error('Error submitting data!');
+      });
+
   };
 
   // Handle change - SppedSlalom form  
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSpeedSlalomForm({ ...SpeedSlalomForm, [event.target.name]: event.target.value });
 
-    if (event.target.name === 'endline') {
+    if (event.target.name === 'date') {
+      setSpeedSlalomForm({ ...SpeedSlalomForm, date: new Date(event.target.value) });
+    } else if (event.target.name === 'endline') {
       setSpeedSlalomForm({ ...SpeedSlalomForm, endLine: event.target.checked });
     } else {
       setSpeedSlalomForm({ ...SpeedSlalomForm, [event.target.name]: event.target.value });
@@ -71,7 +106,7 @@ const SpeedSlalom = () => {
         </label>
         <br />
         <label>
-          Date: <input type="date" name="date" id="inputType" value={SpeedSlalomForm.date || new Date().toISOString().split('T')[0]} onChange={handleChange} required />
+        Date: <input type="date" name="date" id="inputType" value={SpeedSlalomForm.date.toISOString().split('T')[0]} onChange={handleChange} required />
         </label>
         <br />
         <label>
@@ -109,7 +144,7 @@ const SpeedSlalom = () => {
         <button type="submit">Submit</button>
         <br />
         <label>
-          Result:  <input type="text" name="result" id="inputType" value={SpeedSlalomForm.result} onChange={handleChange} disabled />
+          Result:  <input type="text" name="SSresult" id="inputType" value={SpeedSlalomForm.SSResult} onChange={handleChange} readOnly={true} />
         </label>
         <br />
       </form>

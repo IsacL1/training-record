@@ -3,13 +3,14 @@ const mongoose = require('mongoose')
 const athletesInfoSchema = new mongoose.Schema({
     athletesId: String,
     athletesName: String,
-    bod: date,
+    bod: String,
     phone: String,
     password: String,
     addr: String,
     HKID4digit: String
 })
 
+// Classic Slalom trick
 const classicSlalomSchema = new mongoose.Schema({
     trickName: String,
     level: String,
@@ -18,7 +19,8 @@ const classicSlalomSchema = new mongoose.Schema({
     notes: String,
 })
 
-const SlideSchema = new mongoose.Schema({
+// Slide trick
+const slideSchema = new mongoose.Schema({
     trickName: String,
     level: String,
     family: String,
@@ -26,6 +28,7 @@ const SlideSchema = new mongoose.Schema({
     notes: String
 })
 
+// Off skate exercise
 const offSkateExerciseSchema = new mongoose.Schema({
     exerciseName: String,
     set: Number,
@@ -37,7 +40,7 @@ const offSkateExerciseSchema = new mongoose.Schema({
     notes: String,
 })
 
-
+// To record athletes current ability
 const athletesCurrentAbilityValueSchema = new mongoose.Schema({
     athletesName: String,
     CurrentAbilityValue: [{
@@ -58,21 +61,21 @@ const goalsSchema = new mongoose.Schema({
         {
             SpeedSlalom: [
                 {
-                    date: string,
-                    side: string,
-                    step: number,
-                    time: number,
-                    missedCone: number,
-                    kickedCone: number,
-                    DQ: boolean,
-                    endLine: boolean,
-                    result: number,
-                    notes: string,
+                    date: Date,
+                    side: String,
+                    step: Number,
+                    time: Number,
+                    missedCone: Number,
+                    kickedCone: Number,
+                    DQ: Boolean,
+                    endLine: Boolean,
+                    result: Number,
+                    notes: String,
                 }
             ],
             Slide: [
                 {
-                    date: String,
+                    date: Date,
                     trickName: String,
                     level: String,
                     family: String,
@@ -82,7 +85,7 @@ const goalsSchema = new mongoose.Schema({
             ],
             ClassicSlalom: [
                 {
-                    date: String,
+                    date: Date,
                     trickName: String,
                     level: String,
                     family: String,
@@ -92,7 +95,7 @@ const goalsSchema = new mongoose.Schema({
             ],
             offSkateExercise: [
                 {
-                    date: String,
+                    date: Date,
                     exerciseName: String,
                     set: Number,
                     reps: Number,
@@ -107,20 +110,34 @@ const goalsSchema = new mongoose.Schema({
     ]
 })
 
+// Athletes records
 const athletesRecordsSchema = new mongoose.Schema({
     athletesName: String,
-    athletesCurrentAbilityValue: [],
-    SSRrecords: [],
-    CSRecords: [],
-    SlideRecords: [],
-    offSkateExercise: [],
-    goals: []
+    //...athletesCurrentAbilityValueSchema.obj, // call the athletesCurrentAbilityValueSchema
+    SSRecords: [{
+        date: Date,
+        side: {type: String, enum:["L", "R"]},
+        step: Number,
+        time: Number,
+        missedCone: Number,
+        kickedCone: Number,
+        DQ: Boolean,
+        endLine: Boolean,
+        SSResult: Number,
+        notes: String,
+    }],
+    /*CSRecords: [{ date: Date , type: Schema.Types.ObjectId, ref: 'ClassicSlalom' }], // call the classicSlalomSchema
+    SlideRecords: [{ date: Date , type: Schema.Types.ObjectId, ref: 'Slide'}], // call the slideSchema
+    offSkateExercise: [{ date: Date , type: Schema.Types.ObjectId, ref:  'offSkateExercise'}], // call the offSkateExerciseSchema
+    ...goalsSchema.obj  //  call the goalsSchema
+    */
 })
 
 
+// export to mongoDB
 const athletesInfoModel = mongoose.model('AthletesInfo', athletesInfoSchema)
 const classicSlalomModel = mongoose.model('ClassicSlalom', classicSlalomSchema)
-const SlideModel = mongoose.model('Slide', SlideSchema)
+const SlideModel = mongoose.model('Slide', slideSchema)
 const offSkateExerciseModel = mongoose.model('offSkateExercise', offSkateExerciseSchema)
 const goalsModel = mongoose.model('Goals', goalsSchema)
 const athletesCurrentAbilityValueModel = mongoose.model('AthletesCurrentAbilityValue', athletesCurrentAbilityValueSchema)

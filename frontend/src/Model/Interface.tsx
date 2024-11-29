@@ -1,85 +1,85 @@
 export interface AthletesInfo {
-    athletesId: string;
-    athletesName: string;
+    athletesId: String;
+    athletesName: String;
     bod: Date;
-    phone: string;
-    password: string;
-    addr: string;
-    HKID4digit: string;
+    phone: String;
+    password: String;
+    addr: String;
+    HKID4digit: String;
 }
 
 export interface CurrentAbilityValue {
     date: Date;
-    weight: number;
-    height: number;
-    timedRun9min: number;
-    verticalJump: number;
-    longJump: number;
-    sqaut: number;
+    weight: Number;
+    height: Number;
+    timedRun9min: Number;
+    verticalJump: Number;
+    longJump: Number;
+    sqaut: Number;
 }
 
 export interface AthletesCurrentAbilityValue {
-    athletesName: string;
+    athletesName: String;
     CurrentAbilityValue: CurrentAbilityValue[];
 }
 
 export interface SpeedSlalom {
-    date: string;
-    side: string;
-    step: number;
-    time: number;
-    missedCone: number;
-    kickedCone: number;
-    DQ: boolean;
-    endLine: boolean;
-    result: number;
-    notes?: string;
+    date: String;
+    side: String;
+    step: Number;
+    time: Number;
+    missedCone: Number;
+    kickedCone: Number;
+    DQ: Boolean;
+    endLine: Boolean;
+    result: Number;
+    notes?: String;
 }
 
 export interface Slide {
-    date: string;
-    trickName: string;
-    level: string;
-    family: string;
-    length: number;
-    notes?: string;
+    date: String;
+    trickName: String;
+    level: String;
+    family: String;
+    length: Number;
+    notes?: String;
 }
 
 export interface ClassicSlalom {
-    date: string;
-    trickName: string;
-    level: string;
-    family: string;
-    cones: number;
-    notes?: string;
+    date: String;
+    trickName: String;
+    level: String;
+    family: String;
+    cones: Number;
+    notes?: String;
 }
 
 export interface OffSkateExercise {
-    date: string;
-    exerciseName: string;
-    set: number;
-    reps: number;
-    weight: number;
-    totalSet: number;
-    totalReps: number;
-    totalWeight: number;
-    notes?: string;
+    date: String;
+    exerciseName: String;
+    set: Number;
+    reps: Number;
+    weight: Number;
+    totalSet: Number;
+    totalReps: Number;
+    totalWeight: Number;
+    notes?: String;
 }
 
 export interface Goals {
-    athletesName: string;
-    SpeedSlalom: SpeedSlalom[];
-    Slide: Slide[];
-    ClassicSlalom: ClassicSlalom[];
+    athletesName: String;
+    speedSlalom: SpeedSlalom[];
+    slide: Slide[];
+    classicSlalom: ClassicSlalom[];
     offSkateExercise: OffSkateExercise[];
 }
 
 export interface Athletes {
-    name: string;
+    athletesName: String;
     athletesCurrentAbilityValue: CurrentAbilityValue[];
     SSRrecords: any[];
     CSrecords: any[];
-    Sliderecords: any[];
+    slideRecords: any[];
     offSkateExercise: any[];
     goals: Goals[];
 }

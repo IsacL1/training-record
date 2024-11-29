@@ -1,8 +1,8 @@
 {
-  "SSRecords": [
+  "Athletes": [
     {
       "name": "Chan Hiu Yan",
-      "records": [
+      "SSRecords": [
         {
           "date": "2024-11-23",
           "side": "L",
@@ -103,11 +103,11 @@
     },
     {
       "name": "Ko Cheuk Ying",
-      "records": []
+      "SSRecords": []
     },
     {
       "name": "Liu Lok Yee",
-      "records": []
+      "SSRecords": []
     }
   ]
 }
