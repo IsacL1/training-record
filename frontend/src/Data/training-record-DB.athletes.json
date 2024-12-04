@@ -1,0 +1,231 @@
+[{
+  "_id": {
+    "$oid": "674932daa360964e2ac4fdb3"
+  },
+  "Athletes": [
+    {
+      "AthleteName": "Chan Hiu Yan",
+      "athletesCurrentAbilityValue": [],
+      "SSRecords": [
+        {
+          "date": "2024-11-23",
+          "side": "L",
+          "step": 8,
+          "time": 5.32,
+          "missedCone": 0,
+          "kickCone": 5,
+          "DQ": true,
+          "endLine": false,
+          "result": 6.32,
+          "notes": ""
+        },
+        {
+          "date": "2024-11-23",
+          "side": "L",
+          "step": 9,
+          "time": 5.5,
+          "missedCone": 0,
+          "kickCone": 5,
+          "DQ": true,
+          "endLine": false,
+          "result": 6.5,
+          "notes": ""
+        },
+        {
+          "date": "2024-11-23",
+          "side": "L",
+          "step": 9,
+          "time": 5.24,
+          "missedCone": 0,
+          "kickCone": 3,
+          "DQ": false,
+          "endLine": false,
+          "result": 5.84,
+          "notes": ""
+        },
+        {
+          "date": "2024-11-23",
+          "side": "R",
+          "step": 9,
+          "time": 5.24,
+          "missedCone": 1,
+          "kickCone": 4,
+          "DQ": true,
+          "endLine": false,
+          "result": 6.24,
+          "notes": ""
+        },
+        {
+          "date": "2024-11-23",
+          "side": "R",
+          "step": 9,
+          "time": 5.17,
+          "missedCone": 0,
+          "kickCone": 1,
+          "DQ": false,
+          "endLine": false,
+          "result": 5.37,
+          "notes": ""
+        },
+        {
+          "date": "2024-11-23",
+          "side": "R",
+          "step": 9,
+          "time": 5.04,
+          "missedCone": 0,
+          "kickCone": 1,
+          "DQ": false,
+          "endLine": false,
+          "result": 5.24,
+          "notes": ""
+        },
+        {
+          "date": "2024-11-23",
+          "side": "R",
+          "step": 9,
+          "time": 5.55,
+          "missedCone": 0,
+          "kickCone": 2,
+          "DQ": false,
+          "endLine": false,
+          "result": 5.95,
+          "notes": ""
+        },
+        {
+          "date": "2024-11-23",
+          "side": "R",
+          "step": 9,
+          "time": 5.7,
+          "missedCone": 5,
+          "kickCone": 2,
+          "DQ": true,
+          "endLine": false,
+          "result": 5.95,
+          "notes": ""
+        }
+      ],
+      "CSrecords": [],
+      "Sliderecords": [],
+      "offSkateExercise": [],
+      "goals": []
+    },
+    {
+      "AthleteName": "Ko Cheuk Ying",
+      "athletesCurrentAbilityValue": [],
+      "SSRecords": [],
+      "CSRecords": [],
+      "SlideRecords": [],
+      "offSkateExercise": [],
+      "goals": []
+    },
+    {
+      "AthleteName": "Liu Lok Yee",
+      "athletesCurrentAbilityValue": [],
+      "SSRecords": [],
+      "CSRecords": [],
+      "SlideRecords": [],
+      "offSkateExercise": [],
+      "goals": []
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "674966c457472317d960a864"
+  },
+  "athletesName": "awfggw",
+  "SSRecords": [
+    {
+      "date": {
+        "$date": "2024-11-29T07:01:18.279Z"
+      },
+      "side": "L",
+      "step": 2,
+      "time": 2,
+      "missedCone": 2,
+      "kickedCone": 0,
+      "DQ": false,
+      "endLine": false,
+      "notes": "",
+      "_id": {
+        "$oid": "674966c457472317d960a865"
+      }
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674966ed0497d936461318a1"
+  },
+  "athletesName": "awfggw",
+  "SSRecords": [
+    {
+      "date": {
+        "$date": "2024-11-29T07:01:18.279Z"
+      },
+      "side": "L",
+      "step": 2,
+      "time": 2,
+      "missedCone": 2,
+      "kickedCone": 0,
+      "DQ": false,
+      "endLine": false,
+      "notes": "",
+      "_id": {
+        "$oid": "674966ed0497d936461318a2"
+      }
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674968601cce0b580ce7f27c"
+  },
+  "athletesName": "asgasg",
+  "SSRecords": [
+    {
+      "date": {
+        "$date": "2024-11-29T07:08:09.942Z"
+      },
+      "side": "L",
+      "step": 2,
+      "time": 2,
+      "missedCone": 2,
+      "kickedCone": 0,
+      "DQ": false,
+      "endLine": false,
+      "notes": "",
+      "_id": {
+        "$oid": "674968601cce0b580ce7f27d"
+      }
+    }
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "674968731cce0b580ce7f27f"
+  },
+  "athletesName": "asgasg",
+  "SSRecords": [
+    {
+      "date": {
+        "$date": "2024-11-29T07:08:09.942Z"
+      },
+      "side": "L",
+      "step": 2,
+      "time": 2,
+      "missedCone": 2,
+      "kickedCone": 0,
+      "DQ": false,
+      "endLine": false,
+      "notes": "",
+      "_id": {
+        "$oid": "674968731cce0b580ce7f280"
+      }
+    }
+  ],
+  "__v": 0
+}]

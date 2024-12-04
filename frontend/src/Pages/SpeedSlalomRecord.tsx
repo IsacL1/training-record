@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { Athletes } from '../Model/Interface';
+import { AthletesInfo } from '../Model/Interface';
 import axios from 'axios';
+import moment from 'moment';
 
 interface SpeedSlalomForm {
   AthleteName: string;
@@ -17,32 +18,49 @@ interface SpeedSlalomForm {
   notes?: string;
 }
 
-const SpeedSlalom = () => {
-  //const [Athletes, setAthletes] = useState<Athletes[]>([]);
 
+const SpeedSlalom = () => {
+  /*
+  const [athletes, setAthletes] = useState([]);
+  const [selectedAthlete, setSelectedAthlete] = useState('');
+  */
   const [SpeedSlalomForm, setSpeedSlalomForm] = useState<SpeedSlalomForm>({
-    AthleteName: '', 
-    date: new Date(), 
-    side: 'L', 
-    step: 0, 
+    AthleteName: '',
+    date: new Date(),
+    side: 'L',
+    step: 0,
     time: 0.0,
-    missedCone: 0, 
-    kickedCone: 0, 
-    DQ: false, 
-    endLine: false, 
-    SSResult: 0.000, 
+    missedCone: 0,
+    kickedCone: 0,
+    DQ: false,
+    endLine: false,
+    SSResult: 0.000,
     notes: ''
   });
 
+  /*
+    useEffect(() => {
+      axios.get('http://localhost:3001/api/getAthletes')
+        .then(response => {
+          const athletesData = response.data;
+          const athletesNames = athletesData.map((athlete: { athletesName: any; }) => athlete.athletesName);
+          setAthletes(athletesNames);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }, []);
+  */
   // Handle submit - SpeedSlalom form 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    
-  console.log('handleSubmit called');
+    console.log(typeof SpeedSlalomForm.date);
+    console.log(SpeedSlalomForm.date);
+
+    console.log('handleSubmit called');
     event.preventDefault();
     // Calculate the result and keep 3 decimal places
     const SSresult = (Number(SpeedSlalomForm.time) + ((Number(SpeedSlalomForm.missedCone) + Number(SpeedSlalomForm.kickedCone)) * 0.2)).toFixed(3);
 
-    console.log(SpeedSlalomForm);
     setSpeedSlalomForm({ ...SpeedSlalomForm, SSResult: parseFloat(SSresult) });
     console.log(SSresult);
 
@@ -57,6 +75,7 @@ const SpeedSlalom = () => {
       return;
     }
 
+    // Warp the data
     const speedSlalomData = {
       athletesName: SpeedSlalomForm.AthleteName,
       SSRecords: [{
@@ -68,10 +87,13 @@ const SpeedSlalom = () => {
         kickedCone: SpeedSlalomForm.kickedCone,
         DQ: SpeedSlalomForm.DQ,
         endLine: SpeedSlalomForm.endLine,
-        SSRresult: SpeedSlalomForm.SSResult,
+        SSResult: SpeedSlalomForm.SSResult,
         notes: SpeedSlalomForm.notes,
       }]
     };
+
+    console.log(typeof speedSlalomData);
+    console.log(typeof SpeedSlalomForm.date);
 
     // Send data to server
     axios.post('http://localhost:3001/api/addSSRecord', speedSlalomData)
@@ -98,15 +120,37 @@ const SpeedSlalom = () => {
       setSpeedSlalomForm({ ...SpeedSlalomForm, [event.target.name]: event.target.value });
     }
   };
+
   return (
     <div className='main'><h1 className='tittle'>Speed Slalom</h1>
       <form onSubmit={handleSubmit} className='form'>
+        {/*<label>
+          Name: <select name="athleteName" id="inputType" value={selectedAthlete} onChange={(event) => setSelectedAthlete(event.target.value)} required >
+            <option value="">Select an athlete</option>
+
+            {athletes.map((athlete) => (
+              <option key={athlete} value={athlete}>
+                {athlete}
+              </option>
+            ))}
+          </select>
+        </label>
+        */}
         <label>
           Name: <input type="text" name="AthleteName" id="inputType" value={SpeedSlalomForm.AthleteName} onChange={handleChange} required />
         </label>
         <br />
         <label>
-        Date: <input type="date" name="date" id="inputType" value={SpeedSlalomForm.date.toISOString().split('T')[0]} onChange={handleChange} required />
+          Date: <input type="date" name="date" id="inputType"
+            // The value of the input is set to the date part of the SpeedSlalomForm.date
+            // The reason for this is that the input type="date" expects a date string in the format "yyyy-mm-dd"
+            // The SpeedSlalomForm.date is a Date object, so we need to format it to a string in the correct format
+            // The toISOString() method returns a string in the format "yyyy-mm-ddThh:mm:ss.sssZ"
+            // We split the string at the 'T' character to get the date part only
+            value={ SpeedSlalomForm.date.toISOString().split('T')[0] } 
+            // value={moment(SpeedSlalomForm.date).format('YYYY-MM-DD')}
+            onChange={ handleChange } required
+          />
         </label>
         <br />
         <label>

@@ -18,29 +18,33 @@ app.use((req, res, next) => {
 connectDB();
 
 // get request
-app.get('/getAthletes', async (req, res) => {
-  await athletesInfoModel.find({}).then(function (athletes) {
-    res.json(athletes);
+app.get('/api/getAthletes', async (req, res) => {
+  await athletesInfoModel.find({}, "athelesName").then(function (result) {
+    const athletesNames = athletes.map((athletes) => athletes.athletesName);
+    res.json(athletesNames);
   }).catch((err) => {
     console.error(err);
     res.status(500).json({ message: 'Error fetching data' });
   });
 });
+
+/*
+app.get('/api/getAthletes2222222', async (req, res) => {
+  await athletesInfoModel.find({}).then(function (athletesInfo) {
+    res.json(athletesInfo);
+  }).catch((err) => {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching data' });
+  });
+});
+*/
+
+
 
 // get request from mongoDB
-app.get('/getAthletesRecords', async (req, res) => {
-  await athletesRecordsModel.find({}).then(function (athletesRecordsModel) {
-    res.json(athletesRecordsModel);
-  }).catch((err) => {
-    console.error(err);
-    res.status(500).json({ message: 'Error fetching data' });
-
-  });
-});
-
-app.get('/api/addSSRecord', async (req, res) => {
-  await athletesRecordsModel.find({}).then(function (athletesRecordsModel) {
-    res.json(athletesRecordsModel);
+app.get('/api/getSSRecord', async (req, res) => {
+  await athletesRecordsModel.find({}).then(function (athletesRecords) {
+    res.json(athletesRecords);
   }).catch((err) => {
     console.error(err);
     res.status(500).json({ message: 'Error fetching data' });
@@ -50,17 +54,50 @@ app.get('/api/addSSRecord', async (req, res) => {
 
 app.post('/api/addSSRecord', async (req, res) => {
   console.log('Received request to add SS record');
+
   try {
     const speedSlalomData = req.body;
-    const newRecord = new athletesRecordsModel({
-      athletesName: speedSlalomData.athletesName,
-      SSRecords: speedSlalomData.SSRecords.map((record) => ({
-        ...record,
-        date: new Date(record.date),
-      })),
-    });
-    await newRecord.save();
-    res.send('Record added successfully!');
+    // Find the athlete by name
+    const athlete = await athletesRecordsModel.findOne({ athletesName: speedSlalomData.athletesName });
+
+    if (athlete) {
+      // Athlete exists, add new record to SSRecords
+      const newSSRecord = {
+        date: new Date(speedSlalomData.SSRecords[0].date),
+        side: speedSlalomData.SSRecords[0].side,
+        step: speedSlalomData.SSRecords[0].step,
+        time: speedSlalomData.SSRecords[0].time,
+        missedCone: speedSlalomData.SSRecords[0].missedCone,
+        kickedCone: speedSlalomData.SSRecords[0].kickedCone,
+        DQ: speedSlalomData.SSRecords[0].DQ,
+        endLine: speedSlalomData.SSRecords[0].endLine,
+        SSResult: speedSlalomData.SSRecords[0].SSResult,
+        notes: speedSlalomData.SSRecords[0].notes,
+      };
+
+      console.log(newSSRecord);
+      athlete.SSRecords.push(newSSRecord); // Add the new Speed Slalom record to the athlete's existing records
+      await athlete.save().then(() => {
+        console.log('Records updated successfully!');
+      });
+
+    } else {
+      // Athlete doesn't exist, create a new record
+      const newAthelete = new athletesRecordsModel({
+        athletesName: speedSlalomData.athletesName,
+        // Map the SSRecords array to a new array of objects with the date converted to a Date object
+        SSRecords: speedSlalomData.SSRecords.map((record) => ({
+          ...record,
+          // Convert the date string to a Date object
+          date: new Date(record.date),
+        })),
+      });
+
+      await newAthelete.save().then(() => {
+        res.send('Athelete created, record added successfully!');
+      });
+    }
+
   } catch (error) {
     console.error('Error handling request:', error);
     res.status(500).send('Internal Server Error');
@@ -82,20 +119,7 @@ app.post('/api/addSSRecord', (req, res) => {
   }
   // Validate the data
   /*
-  if (!data.name || !data.date || !data.side || !data.step || !data.time) {
-    res.status(400).json({ message: 'Please fill in all required fields' });
-    return;
-  }
 
-  if (typeof data.time !== 'number' || typeof data.missedCone !== 'number' || typeof data.kickedCone !== 'number') {
-    res.status(400).json({ message: 'Invalid data type' });
-    return;
-  }
-
-  if (data.step <= 0 || data.time < 0 || data.missedCone < 0 || data.kickedCone < 0) {
-    res.status(400).json({ message: 'Invalid values' });
-    return;
-  }
 
   const newRecord = new athletesRecordsModel({
     athletesName: data.athleteName,
