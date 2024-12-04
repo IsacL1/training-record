@@ -28,19 +28,6 @@ app.get('/api/getAthletes', async (req, res) => {
   });
 });
 
-/*
-app.get('/api/getAthletes2222222', async (req, res) => {
-  await athletesInfoModel.find({}).then(function (athletesInfo) {
-    res.json(athletesInfo);
-  }).catch((err) => {
-    console.error(err);
-    res.status(500).json({ message: 'Error fetching data' });
-  });
-});
-*/
-
-
-
 // get request from mongoDB
 app.get('/api/getSSRecord', async (req, res) => {
   await athletesRecordsModel.find({}).then(function (athletesRecords) {
@@ -52,6 +39,8 @@ app.get('/api/getSSRecord', async (req, res) => {
   });
 });
 
+
+// post request to mongoDB
 app.post('/api/addSSRecord', async (req, res) => {
   console.log('Received request to add SS record');
 
@@ -104,52 +93,10 @@ app.post('/api/addSSRecord', async (req, res) => {
   }
 });
 
-/*
-// post request
-app.post('/api/addSSRecord', (req, res) => {
-  //const data = req.body;
-  console.log('Received data:', req.body);
-  try {
-    // Handle the request here
-    console.log('Request handled successfully');
-    res.send('Record added successfully!');
-  } catch (error) {
-    console.error('Error handling request:', error);
-    res.status(500).send('Internal Server Error');
-  }
-  // Validate the data
-  /*
+app.post('/api/addAthletesInfo', async (req, res) => {
 
-
-  const newRecord = new athletesRecordsModel({
-    athletesName: data.athleteName,
-    SSRecords: [data]
-  });
-  
-  newRecord.save((err, doc) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send({ message: 'Error saving data' });
-    } else {
-      res.send({ message: 'Data saved successfully!' });
-    }
-  });
-
-  athletesRecordsModel.findOneAndUpdate(
-    { athletesName: data.name },
-    { $push: { SSRecords: data } },
-    { new: true },
-    (err, doc) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send({ message: 'Error saving data' });
-      } else {
-        res.send({ message: 'Data saved successfully!' });
-      }
-    }
-  );
 });
-*/
+
 const port = 3001;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

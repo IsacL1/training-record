@@ -4,6 +4,7 @@ import Navbar from './Component/Navbar';
 import './Style/temp.scss';
 import SlideRecord from './Pages/SlideRecord';
 import SpeedSlalomRecord from './Pages/SpeedSlalomRecord';
+import AthleteInfoForm from './Pages/AthleteInfo';
 
 function Home (){
 
@@ -18,6 +19,7 @@ function Home (){
             <Route path="/Home" element={<Home />} />
             <Route path="/Pages/SlideRecord" element={<SlideRecord />} />
             <Route path="/Pages/SpeedSlalomRecord" element={<SpeedSlalomRecord />} />
+            <Route path="/Pages/AthleteInfo" element={<AthleteInfoForm />} />
           </Routes>
         </div>
       </main>

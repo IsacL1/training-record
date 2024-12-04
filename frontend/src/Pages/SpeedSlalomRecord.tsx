@@ -1,56 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { AthletesInfo } from '../Model/Interface';
+import { SpeedSlalomForm } from '../Model/Interface';
 import axios from 'axios';
-import moment from 'moment';
-
-interface SpeedSlalomForm {
-  AthleteName: string;
-  date: Date;
-  side: "L" | "R";
-  step: number;
-  time: number;
-  missedCone: number;
-  kickedCone: number;
-  DQ: boolean;
-  endLine: boolean;
-  SSResult: any;
-  notes?: string;
-}
-
 
 const SpeedSlalom = () => {
-  /*
-  const [athletes, setAthletes] = useState([]);
-  const [selectedAthlete, setSelectedAthlete] = useState('');
-  */
   const [SpeedSlalomForm, setSpeedSlalomForm] = useState<SpeedSlalomForm>({
     AthleteName: '',
     date: new Date(),
     side: 'L',
-    step: 0,
-    time: 0.0,
-    missedCone: 0,
-    kickedCone: 0,
+    step: null,
+    time: null,
+    missedCone: null,
+    kickedCone: null,
     DQ: false,
     endLine: false,
-    SSResult: 0.000,
+    SSResult: null,
     notes: ''
   });
 
-  /*
-    useEffect(() => {
-      axios.get('http://localhost:3001/api/getAthletes')
-        .then(response => {
-          const athletesData = response.data;
-          const athletesNames = athletesData.map((athlete: { athletesName: any; }) => athlete.athletesName);
-          setAthletes(athletesNames);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    }, []);
-  */
   // Handle submit - SpeedSlalom form 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     console.log(typeof SpeedSlalomForm.date);
@@ -59,15 +26,23 @@ const SpeedSlalom = () => {
     console.log('handleSubmit called');
     event.preventDefault();
     // Calculate the result and keep 3 decimal places
-    const SSresult = (Number(SpeedSlalomForm.time) + ((Number(SpeedSlalomForm.missedCone) + Number(SpeedSlalomForm.kickedCone)) * 0.2)).toFixed(3);
+    const SSResult = (Number(SpeedSlalomForm.time) + ((Number(SpeedSlalomForm.missedCone) + Number(SpeedSlalomForm.kickedCone)) * 0.2)).toFixed(3);
 
-    setSpeedSlalomForm({ ...SpeedSlalomForm, SSResult: parseFloat(SSresult) });
-    console.log(SSresult);
+    setSpeedSlalomForm({ ...SpeedSlalomForm, SSResult: parseFloat(SSResult) });
+    console.log(SSResult);
 
     // Validate the data
     if (!SpeedSlalomForm.AthleteName || !SpeedSlalomForm.date || !SpeedSlalomForm.side || !SpeedSlalomForm.step || !SpeedSlalomForm.time) {
       toast.error('Please fill in all required fields');
       return;
+    }
+
+    if (SpeedSlalomForm.missedCone === null) {
+      SpeedSlalomForm.missedCone = 0;
+    }
+
+    if (SpeedSlalomForm.kickedCone === null) {
+      SpeedSlalomForm.kickedCone = 0;
     }
 
     if (SpeedSlalomForm.step <= 0 || SpeedSlalomForm.time <= 0 || SpeedSlalomForm.missedCone < 0 || SpeedSlalomForm.kickedCone < 0) {
@@ -136,61 +111,42 @@ const SpeedSlalom = () => {
           </select>
         </label>
         */}
-        <label>
-          Name: <input type="text" name="AthleteName" id="inputType" value={SpeedSlalomForm.AthleteName} onChange={handleChange} required />
-        </label>
-        <br />
-        <label>
-          Date: <input type="date" name="date" id="inputType"
-            // The value of the input is set to the date part of the SpeedSlalomForm.date
-            // The reason for this is that the input type="date" expects a date string in the format "yyyy-mm-dd"
-            // The SpeedSlalomForm.date is a Date object, so we need to format it to a string in the correct format
-            // The toISOString() method returns a string in the format "yyyy-mm-ddThh:mm:ss.sssZ"
-            // We split the string at the 'T' character to get the date part only
-            value={ SpeedSlalomForm.date.toISOString().split('T')[0] } 
-            // value={moment(SpeedSlalomForm.date).format('YYYY-MM-DD')}
-            onChange={ handleChange } required
-          />
-        </label>
-        <br />
-        <label>
-          Side: <input type="text" name="side" id="inputType" value={SpeedSlalomForm.side} onChange={handleChange} required />
-        </label>
-        <br />
-        <label>
-          Step: <input type="number" name="step" id="inputType" value={SpeedSlalomForm.step} onChange={handleChange} required />
-        </label>
-        <br />
-        <label>
-          Time: <input type="number" name="time" id="inputType" value={SpeedSlalomForm.time} onChange={handleChange} required />
-        </label>
-        <br />
-        <label>
-          Missed: <input type="number" name="missedCone" id="inputType" value={SpeedSlalomForm.missedCone == null ? 0 : SpeedSlalomForm.missedCone} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          Kicked: <input type="number" name="kickedCone" id="inputType" value={SpeedSlalomForm.kickedCone == null ? 0 : SpeedSlalomForm.kickedCone} onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          End line: <input type="checkbox" name="endline" id="inputType" checked={SpeedSlalomForm.endLine} onChange={handleChange} />
-        </label>
-        <br />
-        <label>{/* checkbox default true? */}
-          DQ: {Number(SpeedSlalomForm.kickedCone) + Number(SpeedSlalomForm.missedCone) > 4 || SpeedSlalomForm.endLine ? 'Yes' : 'No'}
-        </label>
-        <br />
-        <label>
-          Notes: <input type="text" name="notes" id="inputType" value={SpeedSlalomForm.notes} />
-        </label>
-        <br />
+
+        <input type="text" name="AthleteName" id="inputType" value={SpeedSlalomForm.AthleteName} placeholder="Athelete Name" onChange={handleChange} required />
+
+        <input type="date" name="date" id="inputType"
+          // The value of the input is set to the date part of the SpeedSlalomForm.date
+          // The reason for this is that the input type="date" expects a date string in the format "yyyy-mm-dd"
+          // The SpeedSlalomForm.date is a Date object, so we need to format it to a string in the correct format
+          // The toISOString() method returns a string in the format "yyyy-mm-ddThh:mm:ss.sssZ"
+          // We split the string at the 'T' character to get the date part only
+          value={SpeedSlalomForm.date.toISOString().split('T')[0]} placeholder="Date"
+          // value={moment(SpeedSlalomForm.date).format('YYYY-MM-DD')}
+          onChange={handleChange} required
+        />
+
+        <input type="text" name="side" id="inputType" value={SpeedSlalomForm.side} placeholder="L/R" onChange={handleChange} required />
+
+        <input type="number" name="step" id="inputType" value={SpeedSlalomForm.step ?? 0} placeholder="Steps" onChange={handleChange} required />
+
+        <input type="number" name="time" id="inputType" value={SpeedSlalomForm.time ?? 0} placeholder="Time" onChange={handleChange} required />
+
+        <input type="number" name="missedCone" id="inputType" value={SpeedSlalomForm.missedCone ?? 0} placeholder="Missed Cone" onChange={handleChange} />
+
+        <input type="number" name="kickedCone" id="inputType" value={SpeedSlalomForm.kickedCone ?? 0} placeholder="Kicked Cone" onChange={handleChange} />
+
+        End line: <input type="checkbox" name="endline" id="inputType" checked={SpeedSlalomForm.endLine} placeholder="End Line?" onChange={handleChange} />
+        {/* checkbox default true? */}
+        {Number(SpeedSlalomForm.kickedCone) + Number(SpeedSlalomForm.missedCone) > 4 || SpeedSlalomForm.endLine ? 'DQ' : ''}
+
+        <input type="text" name="notes" id="inputType" value={SpeedSlalomForm.notes} />
+
         <button type="submit">Submit</button>
-        <br />
-        <label>
-          Result:  <input type="text" name="SSresult" id="inputType" value={SpeedSlalomForm.SSResult} onChange={handleChange} readOnly={true} />
-        </label>
-        <br />
+        <br></br>
+        <label>{SpeedSlalomForm.SSResult}</label>
+        {/*
+          <input type="text" name="SSResult" id="inputType" value={SpeedSlalomForm.SSResult} onChange={handleChange} readOnly={true} />
+        */}
       </form>
     </div>
   );

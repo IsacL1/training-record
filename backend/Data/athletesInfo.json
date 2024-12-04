@@ -1,0 +1,10 @@
+[{
+    "AthleteId": "S001",
+    "AthleteName": "Chan Hiu Yan",
+    "bod": { "$date": "2024-12-02T00:00:00.000Z" },
+    "phone": "57102210",
+    "password": "",
+    "addr": "Tung Chung",
+    "HKID4digit": "String"
+
+}]

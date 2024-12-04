@@ -18,6 +18,7 @@ const Navbar = () => {
         <NavLink to="/Pages/SpeedSlalomRecord" id="speedslalom">Speed Slalom</NavLink>
         <NavLink to="/Pages/SlideRecord" id="slide">Slide</NavLink>
         <NavLink to="/Pages/ClassicSlalomRecord" id="slide">Classic</NavLink>
+        <NavLink to="/Pages/AthleteInfo" id="slide">AthleteInfo</NavLink>
       </nav>
     </div>
   );
