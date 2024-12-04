@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  tr-web-frontend:
+    image: node:latest
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "802:6660" # frontend port
+    depends_on:
+      - tr-web-backend
+    environment:
+      - NODE_ENV=development
+    working_dir: /usr/src/web/training-record/frontend
+    volumes:
+      - .:/usr/src/web/training-record/frontend
+    command: yarn start
+    
+  tr-web-backend:
+    image: node:latest
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001" # backend port
+    depends_on:
+      - mongo
+    environment:
+      - DATABASE_URL=mongodb://localhost:27017/training-record-DB
+    working_dir: /usr/src/web/training-record/backend
+    volumes:
+      - .:/usr/src/web/training-record/backend
+    command: yarn start
+
+  mongo:
+    container_name: mongo
+    image: mongo:4.4
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

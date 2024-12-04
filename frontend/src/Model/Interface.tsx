@@ -1,6 +1,6 @@
-export interface AthletesInfo {
-    athletesId: String;
-    athletesName: String;
+export interface AthleteInfoForm {
+    athleteId: String;
+    athleteName: String;
     bod: Date;
     phone: String;
     password: String;
@@ -83,3 +83,18 @@ export interface Athletes {
     offSkateExercise: any[];
     goals: Goals[];
 }
+
+// use success in SSRecord
+export interface SpeedSlalomForm {
+    AthleteName: string;
+    date: Date;
+    side: "L" | "R";
+    step: number | null;
+    time: number | null;
+    missedCone: number | null;
+    kickedCone: number | null;
+    DQ: boolean;
+    endLine: boolean;
+    SSResult: any;
+    notes?: string;
+  }
