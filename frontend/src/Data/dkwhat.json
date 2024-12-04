@@ -1,0 +1,31 @@
+{
+    "Athletes": [
+        {
+            "name": "Chan Hiu Yan",
+            "athletesCurrentAbilityValue": [],
+            "SSRrecords": [],
+            "CSrecords": [],
+            "Sliderecords": [],
+            "offSkateExercise": [],
+            "goals": []
+        },
+        {
+            "name": "Ko Cheuk Ying",
+            "athletesCurrentAbilityValue": [],
+            "SSRrecords": [],
+            "CSrecords": [],
+            "Sliderecords": [],
+            "offSkateExercise": [],
+            "goals": []
+        },
+        {
+            "name": "Liu Lok Yee",
+            "athletesCurrentAbilityValue": [],
+            "SSRrecords": [],
+            "CSrecords": [],
+            "Sliderecords": [],
+            "offSkateExercise": [],
+            "goals": []
+        }
+    ]
+}
