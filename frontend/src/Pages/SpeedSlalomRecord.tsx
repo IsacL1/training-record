@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { SpeedSlalomForm } from '../Model/Interface';
 import axios from 'axios';
+import moment
+ from 'moment';
+const host = 'localhost:3001'
 
 const SpeedSlalom = () => {
   const [SpeedSlalomForm, setSpeedSlalomForm] = useState<SpeedSlalomForm>({
@@ -63,7 +66,7 @@ const SpeedSlalom = () => {
     console.log(typeof SpeedSlalomForm.date);
 
     // Send data to server
-    axios.post('http://localhost:3001/api/addSSRecord', speedSlalomData)
+    axios.post(`http://${host}/api/addSSRecord`, speedSlalomData)
       .then((response) => {
         console.log(response.data);
         toast.success('Data submitted successfully!');
@@ -112,8 +115,8 @@ const SpeedSlalom = () => {
           // The SpeedSlalomForm.date is a Date object, so we need to format it to a string in the correct format
           // The toISOString() method returns a string in the format "yyyy-mm-ddThh:mm:ss.sssZ"
           // We split the string at the 'T' character to get the date part only
-          value={SpeedSlalomForm.date.toISOString().split('T')[0]} placeholder="Date"
-          // value={moment(SpeedSlalomForm.date).format('YYYY-MM-DD')}
+          // value={SpeedSlalomForm.date.toISOString().split('T')[0]} placeholder="Date"
+          value={moment(SpeedSlalomForm.date).format('YYYY-MM-DD')}
           onChange={handleChange} required
         />
 

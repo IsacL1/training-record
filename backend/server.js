@@ -7,6 +7,12 @@ const athletesInfoModel = require('./models/schema.js').athletesInfoModel;
 
 const app = express();
 
+const cors = require('cors');
+
+app.use(cors({
+  origin: 'http://localhost:6660',
+}));
+
 app.use(express.json());
 
 app.use((req, res, next) => {
@@ -35,6 +41,16 @@ app.get('/api/getAthleteInfo', async (req, res) => {
     console.error(err);
     res.status(500).json({ message: 'Error fetching data' });
   });
+});
+
+app.get('/api/athletes/count', async (req, res) => {
+  try {
+    const count = await athletesInfoModel.countDocuments();
+    res.json({ count });
+  } catch (error) {
+    console.error('Error retrieving athlete count:', error);
+    res.status(500).json({ message: 'Error fetching data' });
+  }
 });
 
 
@@ -92,7 +108,7 @@ app.post('/api/addSSRecord', async (req, res) => {
 });
 
 app.post('/api/addAthleteInfo', async (req, res) => {
-  console.log('Received request to add SS record');
+  console.log('Received request to add Athlete Info');
 
   try {
     const athletesInfo = req.body;
@@ -100,6 +116,7 @@ app.post('/api/addAthleteInfo', async (req, res) => {
     const newAthletesInfo = new athletesInfoModel(athletesInfo);
     await newAthletesInfo.save().then(() => {
       res.send('Athlete created, record added successfully!');
+      console.log('Records added successfully!');
     });
   } catch (error) {
     console.error('Error handling request:', error);

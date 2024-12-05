@@ -2,26 +2,49 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 //import { AthleteInfoForm } from '../Model/Interface';
 import axios from 'axios';
+import { format } from 'path';
+import moment from 'moment';
+
+const serverHost = 'localhost:3001'
 
 interface AthleteInfoForm {
-    athleteId?: string;
+    athleteId: string;
     athleteName: string;
     bod: Date;
     phone: string;
     password: string;
-    ConfirmPassword: string;
+    //ConfirmPassword: string;
     addr: string;
     HKID4digit: string;
 }
 
+async function getNextAthleteId(): Promise<string> {
+    try {
+      // Retrieve the total count of documents in the collection
+      const response = await axios.get(`http://${serverHost}/api/athletes/count`);
+      const count = response.data.count;
+  
+      // Increment the count by 1 to get the next ID
+      const nextId = count + 1;
+  
+      // Format the ID as per your requirements
+      const formattedId = `S${nextId.toString().padStart(3, '0')}`;
+  
+      return formattedId;
+    } catch (error) {
+      console.error('Error retrieving athlete count:', error);
+      throw error;
+    }
+  }
 
 const AthleteInfo = () => {
     const [AthleteInfoForm, setAthleteInfoForm] = useState<AthleteInfoForm>({
+        athleteId: '',
         athleteName: '',
         bod: new Date(),
         phone: '',
         password: '',
-        ConfirmPassword: '',
+        //ConfirmPassword: '',
         addr: '',
         HKID4digit: ''
     });
@@ -83,21 +106,26 @@ const AthleteInfo = () => {
         const isValidPassword = validatePassword(AthleteInfoForm.password);
         const isValidPhoneNumber = validatePhoneNumber(AthleteInfoForm.phone);
         const isValidHKID = validateHKID(AthleteInfoForm.HKID4digit);
+        const newAthleteId = String(getNextAthleteId());
+        
+        //setAthleteInfoForm({...AthleteInfoForm, athleteId: newAthleteId});
 
         if (!isValidPassword || !isValidPhoneNumber || !isValidHKID) {
             return;
         }
 
         // Send data to server
-        axios.post('http://localhost:3001/api/addAthleteInfo', AthleteInfoForm)
+        axios.post(`http://${serverHost}/api/addAthleteInfo`, AthleteInfoForm)
             .then((response) => {
+                console.log(newAthleteId);
                 console.log(response.data);
                 setAthleteInfoForm({
+                    athleteId: '',
                     athleteName: '',
                     bod: new Date(),
                     phone: '',
                     password: '',
-                    ConfirmPassword: '',
+                    //ConfirmPassword: '',
                     addr: '',
                     HKID4digit: ''
                   });
@@ -144,7 +172,9 @@ const AthleteInfo = () => {
         <div className='main'><h1 className='title'>Athlete Registration</h1>
             <form onSubmit={handleSubmit} className='form'>
                 <input type="text" name="athleteName" value={AthleteInfoForm.athleteName} placeholder="Your Full Name" onChange={handleChange} required />
-                <input type="date" name="bod" value={AthleteInfoForm.bod.toISOString().split('T')[0]} max="9999-12-31" placeholder="Birthday" onChange={handleChange} required />
+                <span></span>
+                {/* <input type="date" name="bod" value={AthleteInfoForm.bod.toISOString().split('T')[0] format="yyyy-MM-dd"} max="9999-12-31" placeholder="Birthday" onChange={handleChange} required /> */}
+                <input type="date" name="bod" value={moment(AthleteInfoForm.bod).format('YYYY-MM-DD')} placeholder="Birthday" onChange={handleChange} required />
                 <input type="text" name="phone" value={AthleteInfoForm.phone} placeholder="Phone Number" onChange={handleChange} required />
                 {/* <input type="password" name="password" value={AthleteInfoForm.password} placeholder="Password" onChange={handleChange} required />
                 <input type="password" name="ConfirmPassword" value={AthleteInfoForm.ConfirmPassword} placeholder="Confirm Password" onChange={handleChange} required /> */}
