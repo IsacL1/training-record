@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { SpeedSlalomForm } from '../Model/Interface';
 import axios from 'axios';
-import moment
- from 'moment';
-const host = 'localhost:3001'
+import moment from 'moment';
+
+const host = 'localhost:3001';
 
 const SpeedSlalom = () => {
   const [SpeedSlalomForm, setSpeedSlalomForm] = useState<SpeedSlalomForm>({
@@ -91,11 +91,17 @@ const SpeedSlalom = () => {
     }
   };
 
+
   return (
-    <div className='main'><h1 className='title'>Speed Slalom</h1>
-      <form onSubmit={handleSubmit} className='form'>
-        {/*<label>
-          Name: <select name="athleteName" id="inputType" value={selectedAthlete} onChange={(event) => setSelectedAthlete(event.target.value)} required >
+
+    <div className='main'>
+      <head>
+      </head>
+      <h1 className='title'>Speed Slalom</h1>
+      <div className='container'>
+        <form className='form' onSubmit={handleSubmit}>
+          {/*<label>
+          Name: <select name="athleteName" className="inputBox" value={selectedAthlete} onChange={(event) => setSelectedAthlete(event.target.value)} required >
             <option value="">Select an athlete</option>
 
             {athletes.map((athlete) => (
@@ -107,44 +113,59 @@ const SpeedSlalom = () => {
         </label>
         */}
 
-        <input type="text" name="AthleteName" id="inputType" value={SpeedSlalomForm.AthleteName} placeholder="Athelete Name" onChange={handleChange} required />
+          <input type="text" name="AthleteName" className="inputBox"
+            value={SpeedSlalomForm.AthleteName}
+            placeholder="Athelete Name" onChange={handleChange} required />
+          <br></br>
 
-        <input type="date" name="date" id="inputType"
-          // The value of the input is set to the date part of the SpeedSlalomForm.date
-          // The reason for this is that the input type="date" expects a date string in the format "yyyy-mm-dd"
-          // The SpeedSlalomForm.date is a Date object, so we need to format it to a string in the correct format
-          // The toISOString() method returns a string in the format "yyyy-mm-ddThh:mm:ss.sssZ"
-          // We split the string at the 'T' character to get the date part only
-          // value={SpeedSlalomForm.date.toISOString().split('T')[0]} placeholder="Date"
-          value={moment(SpeedSlalomForm.date).format('YYYY-MM-DD')}
-          onChange={handleChange} required
-        />
+          <input type="date" name="date" className="inputBox"
+            // The value of the input is set to the date part of the SpeedSlalomForm.date
+            // The reason for this is that the input type="date" expects a date string in the format "yyyy-mm-dd"
+            // The SpeedSlalomForm.date is a Date object, so we need to format it to a string in the correct format
+            // The toISOString() method returns a string in the format "yyyy-mm-ddThh:mm:ss.sssZ"
+            // We split the string at the 'T' character to get the date part only
+            // value={SpeedSlalomForm.date.toISOString().split('T')[0]} placeholder="Date"
+            value={moment(SpeedSlalomForm.date).format('YYYY-MM-DD')}
+            onChange={handleChange} required
+          />
+          <br></br>
 
-        <input type="radio" name="side" id="left" value="L" checked={SpeedSlalomForm.side === 'L'} onChange={handleChange} />
-        <label htmlFor="left">L</label>
-        
-        <input type="radio" name="side" id="right" value="R" checked={SpeedSlalomForm.side === 'R'} onChange={handleChange} />
-        <label htmlFor="right">R</label>
+          <input type="radio" name="side" className="inputBox" value="L" checked={SpeedSlalomForm.side === 'L'} onChange={handleChange} />
+          <label htmlFor="left">L</label>
 
-        <input type="number" name="step" id="inputType" value={SpeedSlalomForm.step ?? 0} placeholder="Steps" onChange={handleChange} required />
 
-        <input type="number" name="time" id="inputType" value={SpeedSlalomForm.time ?? 0} placeholder="Time" onChange={handleChange} required />
+          <input type="radio" name="side" className="inputBox" value="R" checked={SpeedSlalomForm.side === 'R'} onChange={handleChange} />
+          <label htmlFor="right">R</label>
+          <br></br>
 
-        <input type="number" name="missedCone" id="inputType" value={SpeedSlalomForm.missedCone ?? 0} placeholder="Missed Cone" onChange={handleChange} />
+          <input type="number" name="step" className="inputBox" value={SpeedSlalomForm.step ?? 0} placeholder="Steps" onChange={handleChange} required />
+          <br></br>
 
-        <input type="number" name="kickedCone" id="inputType" value={SpeedSlalomForm.kickedCone ?? 0} placeholder="Kicked Cone" onChange={handleChange} />
+          <input type="number" name="time" className="inputBox" value={SpeedSlalomForm.time ?? 0} placeholder="Time" onChange={handleChange} required />
+          <br></br>
 
-        End line: <input type="checkbox" name="endline" id="inputType" checked={SpeedSlalomForm.endLine} placeholder="End Line?" onChange={handleChange} />
-        {/* checkbox default true? */}
-        {Number(SpeedSlalomForm.kickedCone) + Number(SpeedSlalomForm.missedCone) > 4 || SpeedSlalomForm.endLine ? 'DQ' : ''}
+          <input type="number" name="missedCone" className="inputBox" value={SpeedSlalomForm.missedCone ?? 0} placeholder="Missed Cone" onChange={handleChange} />
+          <br></br>
 
-        <input type="text" name="notes" id="inputType" value={SpeedSlalomForm.notes} placeholder='Notes' />
+          <input type="number" name="kickedCone" className="inputBox" value={SpeedSlalomForm.kickedCone ?? 0} placeholder="Kicked Cone" onChange={handleChange} />
+          <br></br>
 
-        <button type="submit">Submit</button>
-        <br></br>
-        <label>{SpeedSlalomForm.SSResult}</label>
+          <label>
+            End line: <input type="checkbox" name="endline" className="inputBox" checked={SpeedSlalomForm.endLine} placeholder="End Line?" onChange={handleChange} />
+          </label>
+          {/* checkbox default true? */}
+          {Number(SpeedSlalomForm.kickedCone) + Number(SpeedSlalomForm.missedCone) > 4 || SpeedSlalomForm.endLine ? 'DQ' : ''}
 
-      </form>
+
+          <input type="text" name="notes" className="inputBox" value={SpeedSlalomForm.notes} placeholder='Notes' />
+          <br></br>
+
+          <button type="submit">Submit</button>
+          <br></br>
+          <label>{SpeedSlalomForm.SSResult}</label>
+
+        </form>
+      </div>
     </div>
   );
 };

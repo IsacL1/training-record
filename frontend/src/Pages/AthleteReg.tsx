@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 //import { AthleteInfoForm } from '../Model/Interface';
 import axios from 'axios';
-import { format } from 'path';
 import moment from 'moment';
 
 const serverHost = 'localhost:3001'
@@ -20,24 +19,24 @@ interface AthleteInfoForm {
 
 async function getNextAthleteId(): Promise<string> {
     try {
-      // Retrieve the total count of documents in the collection
-      const response = await axios.get(`http://${serverHost}/api/athletes/count`);
-      const count = response.data.count;
-  
-      // Increment the count by 1 to get the next ID
-      const nextId = count + 1;
-  
-      // Format the ID as per your requirements
-      const formattedId = `S${nextId.toString().padStart(3, '0')}`;
-  
-      return formattedId;
-    } catch (error) {
-      console.error('Error retrieving athlete count:', error);
-      throw error;
-    }
-  }
+        // Retrieve the total count of documents in the collection
+        const response = await axios.get(`http://${serverHost}/api/athletes/count`);
+        const count = response.data.count;
 
-const AthleteInfo = () => {
+        // Increment the count by 1 to get the next ID
+        const nextId = count + 1;
+
+        // Format the ID as per your requirements
+        const formattedId = `S${nextId.toString().padStart(3, '0')}`;
+
+        return formattedId;
+    } catch (error) {
+        console.error('Error retrieving athlete count:', error);
+        throw error;
+    }
+}
+
+const AthleteReg = () => {
     const [AthleteInfoForm, setAthleteInfoForm] = useState<AthleteInfoForm>({
         athleteId: '',
         athleteName: '',
@@ -107,7 +106,7 @@ const AthleteInfo = () => {
         const isValidPhoneNumber = validatePhoneNumber(AthleteInfoForm.phone);
         const isValidHKID = validateHKID(AthleteInfoForm.HKID4digit);
         const newAthleteId = String(getNextAthleteId());
-        
+
         //setAthleteInfoForm({...AthleteInfoForm, athleteId: newAthleteId});
 
         if (!isValidPassword || !isValidPhoneNumber || !isValidHKID) {
@@ -128,7 +127,7 @@ const AthleteInfo = () => {
                     //ConfirmPassword: '',
                     addr: '',
                     HKID4digit: ''
-                  });
+                });
                 toast.success('Data submitted successfully!');
             })
             .catch((error) => {
@@ -169,23 +168,26 @@ const AthleteInfo = () => {
     };
 
     return (
-        <div className='main'><h1 className='title'>Athlete Registration</h1>
-            <form onSubmit={handleSubmit} className='form'>
-                <input type="text" name="athleteName" value={AthleteInfoForm.athleteName} placeholder="Your Full Name" onChange={handleChange} required />
-                <span></span>
-                {/* <input type="date" name="bod" value={AthleteInfoForm.bod.toISOString().split('T')[0] format="yyyy-MM-dd"} max="9999-12-31" placeholder="Birthday" onChange={handleChange} required /> */}
-                <input type="date" name="bod" value={moment(AthleteInfoForm.bod).format('YYYY-MM-DD')} placeholder="Birthday" onChange={handleChange} required />
-                <input type="text" name="phone" value={AthleteInfoForm.phone} placeholder="Phone Number" onChange={handleChange} required />
-                {/* <input type="password" name="password" value={AthleteInfoForm.password} placeholder="Password" onChange={handleChange} required />
+        <div className='main'>
+            <h1 className='title'>Athlete Registration</h1>
+            <div className='container'>
+                <form className='form' onSubmit={handleSubmit}>
+                    <input type="text" name="athleteName" className="input" value={AthleteInfoForm.athleteName} placeholder="Your Full Name" onChange={handleChange} required />
+                    <span></span>
+                    {/* <input type="date" name="bod" value={AthleteInfoForm.bod.toISOString().split('T')[0] format="yyyy-MM-dd"} max="9999-12-31" placeholder="Birthday" onChange={handleChange} required /> */}
+                    <input type="date" name="bod" className="input" value={moment(AthleteInfoForm.bod).format('YYYY-MM-DD')} placeholder="Birthday" onChange={handleChange} required />
+                    <input type="text" name="phone" className="input" value={AthleteInfoForm.phone} placeholder="Phone Number" onChange={handleChange} required />
+                    {/* <input type="password" name="password" value={AthleteInfoForm.password} placeholder="Password" onChange={handleChange} required />
                 <input type="password" name="ConfirmPassword" value={AthleteInfoForm.ConfirmPassword} placeholder="Confirm Password" onChange={handleChange} required /> */}
-                <input type="text" name="addr" value={AthleteInfoForm.addr} placeholder="Address" onChange={handleChange} required />
-                <input type="text" name="HKID4digit" value={AthleteInfoForm.HKID4digit.toUpperCase()} placeholder="HKID first 4 digit" onChange={handleChange} required />
+                    <input type="text" name="addr" className="input" value={AthleteInfoForm.addr} placeholder="Address" onChange={handleChange} required />
+                    <input type="text" name="HKID4digit" className="input" value={AthleteInfoForm.HKID4digit.toUpperCase()} placeholder="HKID first 4 digit" onChange={handleChange} required />
 
-                <button type="submit">Submit</button>
-                {error && <div style={{ color: 'red' }}>{error}</div>}
-            </form>
+                    <button type="submit">Submit</button>
+                    {error && <div style={{ color: 'red' }}>{error}</div>}
+                </form>
+            </div>
         </div>
     )
 }
 
-export default AthleteInfo;
+export default AthleteReg;
