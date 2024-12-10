@@ -251,15 +251,14 @@ const AthleteReg = () => {
                         <button type="submit" className='formButton'>Submit</button>
                     </div>
 
-                    {error && <div style={{ color: 'red' }}>{error}</div>}
-
-                </form>
-                <form className='form'>
-                    <div>
-                        <input type="file" className='formButton  col-sm-1 col-md-4' name="file" accept=".json, .csv" onChange={handleFileUpload} />
-                        <button type="button" className='formButton  col-sm-1 col-md-1' onClick={handleUploadClick}>Upload</button>
+                    <div className="formContent row md-3">
+                        <input type="file" className='filebutton col-sm-8 col-md-8' name="file" accept=".json, .csv" onChange={handleFileUpload} />
+                        <button type="button" className='formButton col-sm-3 col-md-3' onClick={handleUploadClick}>Upload</button>
                         {uploadError && <div style={{ color: 'red' }}>{uploadError}</div>}
                     </div>
+
+                    {error && <div style={{ color: 'red' }}>{error}</div>}
+
                 </form>
             </div>
         </div>
