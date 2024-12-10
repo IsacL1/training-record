@@ -17,18 +17,18 @@ interface AthleteInfoForm {
     HKID4digit: string;
 }
 
-async function getNextAthleteId(): Promise<string> {
+export async function getNextAthleteId(): Promise<string> {
     try {
         // Retrieve the total count of documents in the collection
         const response = await axios.get(`http://${serverHost}/api/athletes/count`);
         const count = response.data.count;
-
+        console.log("count: ", count);
         // Increment the count by 1 to get the next ID
         const nextId = count + 1;
 
         // Format the ID as per your requirements
         const formattedId = `S${nextId.toString().padStart(3, '0')}`;
-
+        console.log("formattedId: ", formattedId);
         return formattedId;
     } catch (error) {
         console.error('Error retrieving athlete count:', error);
@@ -99,24 +99,27 @@ const AthleteReg = () => {
 
     const [error, setError] = useState('');
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const isValidPassword = validatePassword(AthleteInfoForm.password);
         const isValidPhoneNumber = validatePhoneNumber(AthleteInfoForm.phone);
         const isValidHKID = validateHKID(AthleteInfoForm.HKID4digit);
-        const newAthleteId = String(getNextAthleteId());
+        const newAthleteId = await getNextAthleteId();
+        console.log("newAthleteId in post", newAthleteId);
 
-        //setAthleteInfoForm({...AthleteInfoForm, athleteId: newAthleteId});
+        const updatedAthleteInfoForm = { ...AthleteInfoForm, athleteId: newAthleteId };
+
+        // Print the updated object to the console
+        console.log('Updated Athlete Info Form:', updatedAthleteInfoForm);
 
         if (!isValidPassword || !isValidPhoneNumber || !isValidHKID) {
             return;
         }
 
         // Send data to server
-        axios.post(`http://${serverHost}/api/addAthleteInfo`, AthleteInfoForm)
+        axios.post(`http://${serverHost}/api/addAthleteInfo`, updatedAthleteInfoForm)
             .then((response) => {
-                console.log(newAthleteId);
                 console.log(response.data);
                 setAthleteInfoForm({
                     athleteId: '',
@@ -134,7 +137,6 @@ const AthleteReg = () => {
                 console.error(error);
                 toast.error('Error submitting data!');
             });
-
     };
 
     // Handle change - SppedSlalom form  
@@ -167,23 +169,97 @@ const AthleteReg = () => {
         // }
     };
 
+    // Handle file upload
+    const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+    const [uploadError, setUploadError] = useState(null);
+
+    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            setUploadedFile(file);
+        }
+    };
+
+    const handleUploadClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        if (!uploadedFile) {
+            toast.error('Please select a file to upload!');
+            return;
+        }
+
+        const fileReader = new FileReader();
+        fileReader.onload = async (event) => {
+            if (event.target) {
+                const fileData = event.target.result;
+                const jsonData = { file: fileData, type: 'application/json' };
+                // const jsonData = JSON.stringify(fileData);
+                console.log(typeof jsonData);
+            try {
+                const response = await axios.post(`http://${serverHost}/api/uploadAthleteInfo`, jsonData, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                console.log(response.data);
+                toast.success('Athlete information uploaded successfully!');
+            } catch (error) {
+                console.error(error);
+                setUploadError(null);
+                toast.error('Error uploading athlete information!');
+            }
+        } else {
+            console.error('Error reading file');
+        }
+        };
+        fileReader.readAsText(uploadedFile);
+    };
+
     return (
         <div className='main'>
             <h1 className='title'>Athlete Registration</h1>
             <div className='container'>
                 <form className='form' onSubmit={handleSubmit}>
-                    <input type="text" name="athleteName" className="input" value={AthleteInfoForm.athleteName} placeholder="Your Full Name" onChange={handleChange} required />
-                    <span></span>
-                    {/* <input type="date" name="bod" value={AthleteInfoForm.bod.toISOString().split('T')[0] format="yyyy-MM-dd"} max="9999-12-31" placeholder="Birthday" onChange={handleChange} required /> */}
-                    <input type="date" name="bod" className="input" value={moment(AthleteInfoForm.bod).format('YYYY-MM-DD')} placeholder="Birthday" onChange={handleChange} required />
-                    <input type="text" name="phone" className="input" value={AthleteInfoForm.phone} placeholder="Phone Number" onChange={handleChange} required />
-                    {/* <input type="password" name="password" value={AthleteInfoForm.password} placeholder="Password" onChange={handleChange} required />
-                <input type="password" name="ConfirmPassword" value={AthleteInfoForm.ConfirmPassword} placeholder="Confirm Password" onChange={handleChange} required /> */}
-                    <input type="text" name="addr" className="input" value={AthleteInfoForm.addr} placeholder="Address" onChange={handleChange} required />
-                    <input type="text" name="HKID4digit" className="input" value={AthleteInfoForm.HKID4digit.toUpperCase()} placeholder="HKID first 4 digit" onChange={handleChange} required />
+                    <div className="formContent row md-3">
+                        <label className="formLabel col-sm-2 col-md-4 col-form-label">Name: </label>
+                        <input type="text" name="athleteName" className="inputBox" value={AthleteInfoForm.athleteName} placeholder="Your Full Name" onChange={handleChange} required />
+                        <span></span>
+                    </div>
 
-                    <button type="submit">Submit</button>
+                    <div className="formContent row md-3">
+                        <label className="formLabel col-sm-2 col-md-4 col-form-label">Birthday: </label>
+                        {/* <input type="date" name="bod" value={AthleteInfoForm.bod.toISOString().split('T')[0] format="yyyy-MM-dd"} max="9999-12-31" placeholder="Birthday" onChange={handleChange} required /> */}
+                        <input type="date" name="bod" className="inputBox" value={moment(AthleteInfoForm.bod).format('YYYY-MM-DD')} placeholder="Birthday" onChange={handleChange} required />
+                    </div>
+
+                    <div className="formContent row md-3">
+                        <label className="formLabel col-sm-2 col-md-4 col-form-label">Phone Number: </label>
+                        <input type="text" name="phone" className="inputBox" value={AthleteInfoForm.phone} placeholder="Phone Number" onChange={handleChange} required />
+                        {/* <input type="password" name="password" value={AthleteInfoForm.password} placeholder="Password" onChange={handleChange} required />
+                <input type="password" name="ConfirmPassword" value={AthleteInfoForm.ConfirmPassword} placeholder="Confirm Password" onChange={handleChange} required /> */}
+                    </div>
+
+                    <div className="formContent row md-3">
+                        <label className="formLabel col-sm-2 col-md-4 col-form-label">Address: </label>
+                        <input type="text" name="addr" className="inputBox" value={AthleteInfoForm.addr} placeholder="Address" onChange={handleChange} required />
+                    </div>
+
+                    <div className="formContent row md-3">
+                        <label className="formLabel col-sm-2 col-md-4 col-form-label">HKID (first 4 digit): </label>
+                        <input type="text" name="HKID4digit" className="inputBox" value={AthleteInfoForm.HKID4digit.toUpperCase()} placeholder="HKID first 4 digit" onChange={handleChange} required />
+                    </div>
+                    <div className="formContent row md-3">
+                        <button type="submit" className='formButton'>Submit</button>
+                    </div>
+
                     {error && <div style={{ color: 'red' }}>{error}</div>}
+
+                </form>
+                <form className='form'>
+                    <div>
+                        <input type="file" className='formButton  col-sm-1 col-md-4' name="file" accept=".json, .csv" onChange={handleFileUpload} />
+                        <button type="button" className='formButton  col-sm-1 col-md-1' onClick={handleUploadClick}>Upload</button>
+                        {uploadError && <div style={{ color: 'red' }}>{uploadError}</div>}
+                    </div>
                 </form>
             </div>
         </div>

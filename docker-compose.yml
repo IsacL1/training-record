@@ -15,7 +15,7 @@ services:
       - NODE_ENV=development
     working_dir: /usr/src/web/training-record/frontend
     volumes:
-      - .:/usr/src/web/training-record/frontend
+      - ./:/usr/src/web/training-record
     command: yarn start
     
   tr-web-backend:
@@ -33,7 +33,7 @@ services:
       - DATABASE_URL=mongodb://localhost:27017/training-record-DB
     working_dir: /usr/src/web/training-record/backend
     volumes:
-      - .:/usr/src/web/training-record/backend
+      - ./:/usr/src/web/training-record
     command: yarn start
 
   mongo:

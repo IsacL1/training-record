@@ -34,7 +34,7 @@ app.get('/api/getSSRecord', async (req, res) => {
   });
 });
 
-app.get('/api/getAthleteInfo', async (req, res) => {
+app.get('/api/getAthletesInfo', async (req, res) => {
   await athletesInfoModel.find({}).then(function (athletesRecord) {
     res.json(athletesRecord);
   }).catch((err) => {
@@ -111,18 +111,75 @@ app.post('/api/addAthleteInfo', async (req, res) => {
   console.log('Received request to add Athlete Info');
 
   try {
-    const athletesInfo = req.body;
-    console.log(athletesInfo);
-    const newAthletesInfo = new athletesInfoModel(athletesInfo);
-    await newAthletesInfo.save().then(() => {
-      res.send('Athlete created, record added successfully!');
-      console.log('Records added successfully!');
-    });
+    console.log('Athlete ID:', req.body.athleteId);
+    console.log(req.body);
+
+    const newAthletesInfo = new athletesInfoModel(req.body);
+    await newAthletesInfo.save();
+    res.send('Athlete created, record added successfully!');
+    console.log('Records added successfully!');
+
   } catch (error) {
     console.error('Error handling request:', error);
     res.status(500).send('Internal Server Error');
   }
 });
+
+
+app.post('/api/uploadAthleteInfo', async (req, res) => {
+
+  try {
+    const fileData = req.body.file;
+    const fileType = req.body.type;
+
+    // REMARKS: 
+    // req.body recived as an object, and it can read JSON data
+    // output 
+
+
+    // console.log('req.body type:', typeof fileType);
+    // console.log('req.body:', fileType);
+    // console.log('req.body:', fileType);
+
+    // recived type of fileType is not JSON?? it's Object??
+    if (fileType === 'application/json') {
+      try {
+        // Process the JSON data
+        // const jsonData = fileData;
+        const jsonData = JSON.parse(fileData);
+        // console.log(jsonData);
+        if (Array.isArray(jsonData)) {
+          // const jsonData = JSON.parse(file.buffer.toString());
+          const newAthletesInfo = jsonData.map((item) => new athletesInfoModel(item));
+          await athletesInfoModel.insertMany(newAthletesInfo);
+          res.send('Data inserted successfully!');
+        } else {
+          res.status(400).send('Invalid JSON data');
+        }
+      } catch (error) {
+        console.error('Error processing JSON:', error);
+        res.status(400).send('Invalid JSON data');
+      }
+    } else if (fileType === 'text/csv') {
+      const csvData = [];
+      const csv = require('csv-parser');
+      const readStream = file.buffer.createReadStream();
+      readStream.pipe(csv()).on('data', (row) => {
+        csvData.push(row);
+      }).on('end', async () => {
+        const newAthletesInfo = csvData.map((item) => new athletesInfoModel(item));
+        await athletesInfoModel.insertMany(newAthletesInfo);
+        res.send('Data inserted successfully!');
+      });
+    } else {
+      res.status(400).send('Unsupported file type. Please upload a JSON or CSV file.');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error inserting data');
+  }
+});
+
 
 const port = 3001;
 app.listen(port, () => {

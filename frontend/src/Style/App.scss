@@ -1,3 +1,4 @@
+@import '~bootstrap/scss/bootstrap';
 $timing-function : cubic-bezier(0.190, 1.000, 0.220, 1.000);
 $nav-width-desktop : 40em;
 $nav-width-mobile : 25em;
@@ -212,7 +213,7 @@ nav {
 /* misc */
 body {
 	overflow-x: hidden;
-	background: #444;
+	background: #3dd8db;
 	color: white;
 	font: 1em/1.4 "lato";
 }
@@ -236,40 +237,100 @@ main {
 	.container {
 		.form {
 			font: 1em sans-serif;
-			font-size: 50px;
+			font-size: 30px;
 			font-weight: bold;
 			//background-color: #000000;
-			padding: 2rem;
+			padding: 2rem 1rem 0 1rem;
 			border: 1px solid #ffffff;
 			border-radius: 50px;
 			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-			&>input:not([type="radio"], [type="checkbox"]) {
-				width: 100%;
+			/*
+			&>label {
+				position: flex;
+				width: 2rem;
+				margin-left: 1rem;
+				// padding: 0;
+				border: none;
+				outline: none;
+				background: none;
+			}
+
+			&>input {
+				position: flex;
+				margin: 10px 0;
+				margin-left: 1rem;
+				margin-top: 1rem;
+				width: 50%;
 				height: 40px;
 				margin-bottom: 20px;
-				padding: 10px;
+				// padding: 10px;
 				border: 1px solid #ffffff;
 				background-color: #ddf5f5;
 				border-radius: 8px;
+
 
 				&:invalid {
 					border: 1px solid red;
 				}
 			}
+			*/
 
-			&>input[type="radio"],
-			[type="checkbox"] {
-				width: 30px;
-				height: 30px;
-			}
+			// For testing
+			.formContent {
+				.formLabel {
+					position: relative;
 
-			&>button[type="submit"] {
-				font-size: 2rem;
-				background-color: #FFFFFF;
-				border-radius: 30px ;
-				border: none;
-				cursor: pointer;
+					// 	margin: 0;
+					// 	padding: 0;
+					// 	right: 0;
+					// 	border: none;
+					// 	outline: none;
+					// 	background: none;
+				}
+
+				.inputBox {
+					position: relative;
+					width: 50%;
+					height: 50px;
+					margin-bottom: 20px;
+					padding: 10px;
+					border: 1px solid #ffffff;
+					background-color: #ddf5f5;
+					border-radius: 8px;
+					display: inline-block;
+					padding-block: 1px;
+					padding-inline: 2px;
+
+					&:invalid {
+						border: 1px solid red;
+					}
+				}
+
+				.formRadio {
+					position: relative;
+					margin-left: 1rem;
+
+					&>input[type="radio"]{
+						position: flex;
+						width: 20px;
+						height: 20px;
+					}
+					&>input[type="checkbox"] {
+						position: flex;
+						width: 30px;
+						height: 30px;
+					}
+				}
+
+				&>button[type="submit"] {
+					position: flex;
+					font-size: 2rem;
+					background-color: #FFFFFF;
+					border-radius: 30px;
+					border: none;
+					cursor: pointer;
+				}
 			}
 		}
 	}

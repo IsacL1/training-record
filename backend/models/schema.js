@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const athletesInfoSchema = new mongoose.Schema({
-    athletesId: String,
+    athleteId: String,
     athleteName: String,
     bod: { type: Date },
     phone: String,
