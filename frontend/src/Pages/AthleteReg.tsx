@@ -219,41 +219,41 @@ const AthleteReg = () => {
             <h1 className='title'>Athlete Registration</h1>
             <div className='container'>
                 <form className='form' onSubmit={handleSubmit}>
-                    <div className="formContent row md-3">
-                        <label className="formLabel col-sm-2 col-md-4 col-form-label">Name: </label>
+                    <div className="formContent row row-sm">
+                        <label className="formLabel col-sm col-form-label">Name: </label>
                         <input type="text" name="athleteName" className="inputBox" value={AthleteInfoForm.athleteName} placeholder="Your Full Name" onChange={handleChange} required />
                         <span></span>
                     </div>
 
-                    <div className="formContent row md-3">
-                        <label className="formLabel col-sm-2 col-md-4 col-form-label">Birthday: </label>
+                    <div className="formContent row row-sm">
+                        <label className="formLabel col-sm col-form-label">Birthday: </label>
                         {/* <input type="date" name="bod" value={AthleteInfoForm.bod.toISOString().split('T')[0] format="yyyy-MM-dd"} max="9999-12-31" placeholder="Birthday" onChange={handleChange} required /> */}
                         <input type="date" name="bod" className="inputBox" value={moment(AthleteInfoForm.bod).format('YYYY-MM-DD')} placeholder="Birthday" onChange={handleChange} required />
                     </div>
 
-                    <div className="formContent row md-3">
-                        <label className="formLabel col-sm-2 col-md-4 col-form-label">Phone Number: </label>
+                    <div className="formContent row row-sm">
+                        <label className="formLabel col-sm col-form-label">Phone Number: </label>
                         <input type="text" name="phone" className="inputBox" value={AthleteInfoForm.phone} placeholder="Phone Number" onChange={handleChange} required />
                         {/* <input type="password" name="password" value={AthleteInfoForm.password} placeholder="Password" onChange={handleChange} required />
                 <input type="password" name="ConfirmPassword" value={AthleteInfoForm.ConfirmPassword} placeholder="Confirm Password" onChange={handleChange} required /> */}
                     </div>
 
-                    <div className="formContent row md-3">
-                        <label className="formLabel col-sm-2 col-md-4 col-form-label">Address: </label>
+                    <div className="formContent row row-sm">
+                        <label className="formLabel col-sm col-form-label">Address: </label>
                         <input type="text" name="addr" className="inputBox" value={AthleteInfoForm.addr} placeholder="Address" onChange={handleChange} required />
                     </div>
 
-                    <div className="formContent row md-3">
-                        <label className="formLabel col-sm-2 col-md-4 col-form-label">HKID (first 4 digit): </label>
+                    <div className="formContent row row-sm">
+                        <label className="formLabel col-sm col-form-label">HKID (first 4 digit): </label>
                         <input type="text" name="HKID4digit" className="inputBox" value={AthleteInfoForm.HKID4digit.toUpperCase()} placeholder="HKID first 4 digit" onChange={handleChange} required />
                     </div>
-                    <div className="formContent row md-3">
+                    <div className="formContent row row-sm">
                         <button type="submit" className='formButton'>Submit</button>
                     </div>
 
-                    <div className="formContent row md-3">
-                        <input type="file" className='filebutton col-sm-8 col-md-8' name="file" accept=".json, .csv" onChange={handleFileUpload} />
-                        <button type="button" className='formButton col-sm-3 col-md-3' onClick={handleUploadClick}>Upload</button>
+                    <div className="formContent row row-sm">
+                        <input type="file" className='filebutton col-sm' name="file" accept=".json, .csv" onChange={handleFileUpload} />
+                        <button type="button" className='formButton col-sm' onClick={handleUploadClick}>Upload</button>
                         {uploadError && <div style={{ color: 'red' }}>{uploadError}</div>}
                     </div>
 

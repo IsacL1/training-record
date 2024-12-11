@@ -110,8 +110,8 @@ const SpeedSlalom = () => {
           </select>
         </label>
         */}
-          <div className="formContent row md-3">
-            <label className="formLabel col-sm-2 col-md-4 col-form-label">Athlete Name: </label>
+          <div className="formContent row row-md">
+            <label className="formLabel col-sm col-form-label">Athlete Name: </label>
             <input type="text" name="AthleteName" className="inputBox"
               value={SpeedSlalomForm.AthleteName}
               placeholder="Athelete Name" onChange={handleChange} required />
@@ -123,8 +123,8 @@ const SpeedSlalom = () => {
               placeholder="Athelete Name" onChange={handleChange} required /> */}
 
 
-          <div className="formContent row md-3">
-            <label className="formLabel col-sm-2 col-md-4 col-form-label">Date: </label>
+          <div className="formContent row md">
+            <label className="formLabel col-sm col-form-label">Date: </label>
             <input type="date" name="date" className="inputBox"
               value={moment(SpeedSlalomForm.date).format('YYYY-MM-DD')}
               onChange={handleChange} required
@@ -132,57 +132,57 @@ const SpeedSlalom = () => {
 
           </div>
 
-          <div className="formContent row md-3">
-            <label className="formLabel col-sm-2 col-md-4 col-form-label">Feet in box: </label>
+          <div className="formContent row row-md">
+            <label className="formLabel col-sm col-form-label">Feet in box: </label>
 
-            <div className="formRadio col-md-1">
-              <input type="radio" name="side" className="" value="L" checked={SpeedSlalomForm.side === 'L'} onChange={handleChange} />
-              <label htmlFor="left" className="formLabel col-sm-2 col-form-label">L</label>
+            <div className="formRadio col-md">
+              <input type="radio" name="side col-sm" className="" value="L" checked={SpeedSlalomForm.side === 'L'} onChange={handleChange} />
+              <label htmlFor="left" className="formLabel col-sm col-form-label">L</label>
             </div>
-            <div className="formRadio col-md-1">
-              <input type="radio" name="side" className="" value="R" checked={SpeedSlalomForm.side === 'R'} onChange={handleChange} />
-              <label htmlFor="right" className="formLabel col-sm-2 col-form-label">R</label>
+            <div className="formRadio col-md">
+              <input type="radio" name="side col-sm" className="" value="R" checked={SpeedSlalomForm.side === 'R'} onChange={handleChange} />
+              <label htmlFor="right" className="formLabel col-sm col-form-label">R</label>
             </div>
           </div>
 
-          <div className="formContent row md-3">
-            <label className="formLabel col-sm-2 col-md-4 col-form-label">Steps: </label>
+          <div className="formContent row row-md">
+            <label className="formLabel col-sm col-form-label">Steps: </label>
             <input type="text" name="step" className="inputBox" value={Number(SpeedSlalomForm.step) ?? 0} placeholder="Steps" onChange={handleChange} required />
           </div>
 
-          <div className="formContent row md-3">
-            <label className="formLabel col-sm-2 col-md-4 col-form-label">Time: </label>
+          <div className="formContent row row-md">
+            <label className="formLabel col-sm col-form-label">Time: </label>
             <input type="number" name="time" className="inputBox" value={SpeedSlalomForm.time ?? 0} placeholder="Time" onChange={handleChange} required />
           </div>
 
-          <div className="formContent row md-3">
-            <label className="formLabel col-sm-2 col-md-4 col-form-label">Missed: </label>
+          <div className="formContent row row-md">
+            <label className="formLabel col-sm col-form-label">Missed: </label>
             <input type="number" name="missedCone" className="inputBox" value={SpeedSlalomForm.missedCone ?? 0} placeholder="Missed Cone" onChange={handleChange} />
           </div>
 
-          <div className="formContent row md-3">
-            <label className="formLabel col-sm-2 col-md-4 col-form-label">Kicked: </label>
+          <div className="formContent row row-md">
+            <label className="formLabel col-sm col-form-label">Kicked: </label>
             <input type="number" name="kickedCone" className="inputBox" value={SpeedSlalomForm.kickedCone ?? 0} placeholder="Kicked Cone" onChange={handleChange} />
           </div>
 
-          <div className="formContent row md-3">
-            <label className="formLabel col-md-4 col-form-label">End line: </label>
+          <div className="formContent row row-md">
+            <label className="formLabel col-sm col-form-label">End line: </label>
 
-            <div className="formRadio col-md-4 col-form-label">
-              <input type="checkbox" name="endline" className="" checked={SpeedSlalomForm.endLine} placeholder="End Line?" onChange={handleChange} />
+            <div className="formRadio col-sm col-form-label">
+              <input type="checkbox" name="endline" className="col-sm" checked={SpeedSlalomForm.endLine} placeholder="End Line?" onChange={handleChange} />
             </div>
-            <label className="formLabel col-md-4 col-form-label">
-              {Number(SpeedSlalomForm.kickedCone) + Number(SpeedSlalomForm.missedCone) > 4 || SpeedSlalomForm.endLine ? 'DQ' : ''}
+            <label className="formLabel col-sm col-form-label">
+              <label className='foramLabel-DQ col-sm'>{Number(SpeedSlalomForm.kickedCone) + Number(SpeedSlalomForm.missedCone) > 4 || SpeedSlalomForm.endLine ? 'DQ' : ''}</label>
             </label>
 
           </div>
 
-          <div className="formContent row md-3">
-            <label className="formLabel col-sm-2 col-md-4 col-form-label">Notes: </label>
+          <div className="formContent row row-md">
+            <label className="formLabel col-sm col-form-label">Notes: </label>
             <input type="text" name="notes" className="inputBox" value={SpeedSlalomForm.notes} placeholder='Notes / Comments' onChange={handleChange} />
           </div>
 
-          <div className="formContent row md-3">
+          <div className="formContent row row-md">
             <button type="submit">Submit</button>
           </div>
           <label>{SpeedSlalomForm.SSResult}</label>
