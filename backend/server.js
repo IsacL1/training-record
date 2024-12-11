@@ -43,6 +43,16 @@ app.get('/api/getAthletesInfo', async (req, res) => {
   });
 });
 
+app.get('/api/getAthletesInfo/athletes', async (req, res) => {
+  try {
+    const athletes = await athletesInfoModel.find().select('athleteName');
+    res.json(athletes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 app.get('/api/athletes/count', async (req, res) => {
   try {
     const count = await athletesInfoModel.countDocuments();

@@ -118,6 +118,7 @@ const athletesRecordsSchema = new mongoose.Schema({
         date: { type: Date },
         side: { type: String, enum:["L", "R"] },
         step: Number,
+        time12m: Number,
         time: Number,
         missedCone: Number,
         kickedCone: Number,

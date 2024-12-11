@@ -245,40 +245,9 @@ main {
 			border-radius: 50px;
 			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-			/*
-			&>label {
-				position: flex;
-				width: 2rem;
-				margin-left: 1rem;
-				// padding: 0;
-				border: none;
-				outline: none;
-				background: none;
-			}
-
-			&>input {
-				position: flex;
-				margin: 10px 0;
-				margin-left: 1rem;
-				margin-top: 1rem;
-				width: 50%;
-				height: 40px;
-				margin-bottom: 20px;
-				// padding: 10px;
-				border: 1px solid #ffffff;
-				background-color: #ddf5f5;
-				border-radius: 8px;
-
-
-				&:invalid {
-					border: 1px solid red;
-				}
-			}
-			*/
-
-			// For testing
 			.formContent {
 				margin: 0 20px 20px 0;
+
 				.formLabel {
 					position: relative;
 					font-size: 2em;
@@ -293,6 +262,10 @@ main {
 
 				.foramLabel-DQ {
 					color: red;
+				}
+
+				.formLabel-Result {
+					color: yellow;
 				}
 
 				.inputBox {
@@ -317,11 +290,12 @@ main {
 					position: relative;
 					margin-left: 1rem;
 
-					&>input[type="radio"]{
+					&>input[type="radio"] {
 						position: flex;
 						width: 20px;
 						height: 20px;
 					}
+
 					&>input[type="checkbox"] {
 						position: flex;
 						width: 30px;
@@ -337,7 +311,7 @@ main {
 					cursor: pointer;
 				}
 
-				&>button[type="submit"]{
+				&>button[type="submit"] {
 					position: flex;
 					margin: 0 20px 20px 0;
 					font-size: 2rem;
@@ -347,7 +321,7 @@ main {
 					cursor: pointer;
 				}
 
-				&>button[type="button"]{
+				&>button[type="button"] {
 					position: flex;
 					margin: 0 20px 20px 0;
 					font-size: 1.5rem;
@@ -357,7 +331,7 @@ main {
 					cursor: pointer;
 				}
 
-				&>input[type="file"]{
+				&>input[type="file"] {
 					position: flex;
 					margin: 0 20px 20px 0;
 					margin-right: 2rem;

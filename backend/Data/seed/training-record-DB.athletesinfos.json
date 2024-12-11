@@ -1,6 +1,6 @@
 [{
-  "athletesId": "S001",
-  "athletesName": "Chan Hiu Yan",
+  "athleteId": "S001",
+  "athleteName": "Chan Hiu Yan",
   "bod": "2009-09-14",
   "phone": "57102210",
   "password": "",
@@ -8,8 +8,8 @@
   "HKID4digit": ""
 },
 {
-  "athletesId": "S002",
-  "athletesName": "Ko Cheuk Ying",
+  "athleteId": "S002",
+  "athleteName": "Ko Cheuk Ying",
   "bod": "2015-12-02",
   "phone": "67922594",
   "password": "",
@@ -17,8 +17,8 @@
   "HKID4digit": ""
 },
 {
-  "athletesId": "S003",
-  "athletesName": "Liu Lok Yee",
+  "athleteId": "S003",
+  "athleteName": "Liu Lok Yee",
   "bod": "2014-12-02",
   "phone": "97232027",
   "password": "",
@@ -26,7 +26,7 @@
   "HKID4digit": ""
 },
 {
-  "athletesId": "S004",
+  "athleteId": "S004",
   "athleteName": "鄭若嵐",
   "bod": "2013-12-09",
   "phone": "62896044",
@@ -35,7 +35,7 @@
   "HKID4digit": "A123"
 },
 {
-  "athletesId": "S005",
+  "athleteId": "S005",
   "athleteName": "To Sum Nok",
   "bod": "2024-12-05",
   "phone": "96103713",
@@ -44,7 +44,7 @@
   "HKID4digit": "A123"
 },
 {
-  "athletesId": "S006",
+  "athleteId": "S006",
   "athleteName": "Cheuk Laam",
   "bod": "2013-12-05",
   "phone": "96137751",
@@ -53,7 +53,7 @@
   "HKID4digit": "A123"
 },
 {
-  "athletesId": "S007",
+  "athleteId": "S007",
   "athleteName": "Cham Sze Chai",
   "bod": "2014-12-28",
   "phone": "61716671",
@@ -62,7 +62,7 @@
   "HKID4digit": "A123"
 },
 {
-  "athletesId": "S008",
+  "athleteId": "S008",
   "athleteName": "Chan Chinn Yau",
   "bod": "2019-12-05",
   "phone": "67681992",
@@ -71,7 +71,7 @@
   "HKID4digit": "A123"
 },
 {
-  "athletesId": "S009",
+  "athleteId": "S009",
   "athleteName": "彭梓征",
   "bod": "2024-12-05",
   "phone": "56062380",

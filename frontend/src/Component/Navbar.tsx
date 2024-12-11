@@ -20,8 +20,6 @@ const Navbar = () => {
           <NavLink to="/Pages/AthleteReg" id="slide">Registration</NavLink>
         </nav>
       </div>
-      <div>
-      </div>
     </div>
 
   );

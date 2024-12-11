@@ -90,6 +90,7 @@ export interface SpeedSlalomForm {
     date: Date;
     side: "L" | "R";
     step: number | null;
+    time12m: number | null;
     time: number | null;
     missedCone: number | null;
     kickedCone: number | null;
