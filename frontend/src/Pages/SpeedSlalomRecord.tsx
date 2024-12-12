@@ -29,8 +29,8 @@ const SpeedSlalom = () => {
 
   // Handle submit - SpeedSlalom form 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    console.log(typeof SpeedSlalomForm.date);
-    console.log(SpeedSlalomForm.date);
+    // console.log(typeof SpeedSlalomForm.date);
+    // console.log(SpeedSlalomForm.date);
 
     console.log('handleSubmit called');
     event.preventDefault();
@@ -38,14 +38,14 @@ const SpeedSlalom = () => {
     const SSResult = (Number(SpeedSlalomForm.time) + ((Number(SpeedSlalomForm.missedCone) + Number(SpeedSlalomForm.kickedCone)) * 0.2)).toFixed(3);
 
     setSpeedSlalomForm({ ...SpeedSlalomForm, SSResult: parseFloat(SSResult) });
-    console.log(SSResult);
+    console.log("SSR", SSResult);
 
     // Validate the data
     if (!SpeedSlalomForm.AthleteName || !SpeedSlalomForm.date || !SpeedSlalomForm.side || !SpeedSlalomForm.step || !SpeedSlalomForm.time) {
       toast.error('Please fill in all required fields');
-    } else if (SpeedSlalomForm.missedCone === null || SpeedSlalomForm.missedCone < 0) {
+    } else if (SpeedSlalomForm.missedCone === null || SpeedSlalomForm.missedCone <= 0) {
       SpeedSlalomForm.missedCone = 0;
-    } else if (SpeedSlalomForm.kickedCone === null || SpeedSlalomForm.kickedCone < 0) {
+    } else if (SpeedSlalomForm.kickedCone === null || SpeedSlalomForm.kickedCone <= 0) {
       SpeedSlalomForm.kickedCone = 0;
     } else if (SpeedSlalomForm.step <= 0 || SpeedSlalomForm.time <= 0) {
       toast.error('Invalid values');
@@ -64,13 +64,13 @@ const SpeedSlalom = () => {
         kickedCone: SpeedSlalomForm.kickedCone,
         DQ: SpeedSlalomForm.DQ,
         endLine: SpeedSlalomForm.endLine,
-        SSResult: SpeedSlalomForm.SSResult,
+        SSResult: SSResult,
         notes: SpeedSlalomForm.notes,
       }]
     };
 
     console.log(typeof speedSlalomData);
-    console.log(typeof SpeedSlalomForm.date);
+    console.log(SpeedSlalomForm);
 
     // Send data to server
     axios.post(`http://${host}/api/addSSRecord`, speedSlalomData)
@@ -88,6 +88,7 @@ const SpeedSlalom = () => {
   // Handle change - SppedSlalom form  
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSpeedSlalomForm({ ...SpeedSlalomForm, [event.target.name]: event.target.value });
+    console.log(SpeedSlalomForm);
 
     if (event.target.name === 'date') {
       setSpeedSlalomForm({ ...SpeedSlalomForm, date: new Date(event.target.value) });
@@ -95,6 +96,7 @@ const SpeedSlalom = () => {
       setSpeedSlalomForm({ ...SpeedSlalomForm, endLine: event.target.checked });
     } else {
       setSpeedSlalomForm({ ...SpeedSlalomForm, [event.target.name]: event.target.value });
+      // console.log(SpeedSlalomForm);
     }
   };
 
@@ -219,7 +221,7 @@ const SpeedSlalom = () => {
             <button type="submit">Submit</button>
           </div>
           <div className="formContent row row-md">
-          <label className="formLabel-Result col-sm-5 col-form-label">{SpeedSlalomForm.SSResult}</label>
+          <span className="formLabel-Result col-sm-5 col-form-label">{SpeedSlalomForm.SSResult}</span>
           </div>
         </form>
       </div >
