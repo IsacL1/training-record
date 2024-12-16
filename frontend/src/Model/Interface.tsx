@@ -19,10 +19,11 @@ export interface CurrentAbilityValue {
 }
 
 export interface AthletesCurrentAbilityValue {
-    athletesName: String;
+    athleteName: String;
     CurrentAbilityValue: CurrentAbilityValue[];
 }
 
+// NOT UUSING
 export interface SpeedSlalom {
     date: String;
     side: String;
@@ -67,7 +68,7 @@ export interface OffSkateExercise {
 }
 
 export interface Goals {
-    athletesName: String;
+    athleteName: String;
     speedSlalom: SpeedSlalom[];
     slide: Slide[];
     classicSlalom: ClassicSlalom[];
@@ -75,7 +76,7 @@ export interface Goals {
 }
 
 export interface Athletes {
-    athletesName: String;
+    athleteName: String;
     athletesCurrentAbilityValue: CurrentAbilityValue[];
     SSRrecords: any[];
     CSrecords: any[];
@@ -85,17 +86,23 @@ export interface Athletes {
 }
 
 // use success in SSRecord
-export interface SpeedSlalomForm {
+export interface SpeedSlalomBasic {
     AthleteName: string;
     date: Date;
-    side: "L" | "R";
-    step: number | null;
-    time12m: number | null;
     time: number | null;
     missedCone: number | null;
     kickedCone: number | null;
     DQ: boolean;
     endLine: boolean;
-    SSResult: any;
+    SSResult: number | null;
     notes?: string;
-  }
+    recordType: "Normal" | "Details";
+}
+
+export interface SSRdetails extends SpeedSlalomBasic {
+    side: "L" | "R";
+    step: number | null;
+    time12m?: number | null;
+    time20cones?: number | null;
+    recordType: "Normal" | "Details";
+}

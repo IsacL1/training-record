@@ -78,4 +78,22 @@
   "password": "",
   "addr": "Sha Tin",
   "HKID4digit": "A123"
+},
+{
+  "athleteId": "S010",
+  "athleteName": "Leung Ching Ting",
+  "bod": "2012-02-11T00:00:00.000Z",
+  "phone": "63645211",
+  "password": "",
+  "addr": "Tai Wai",
+  "HKID4digit": "A123"
+},
+{
+  "athleteId": "S011",
+  "athleteName": "Shum Yuk Hang",
+  "bod": "2012-02-11T00:00:00.000Z",
+  "phone": "61666728",
+  "password": "",
+  "addr": "Tai Wai",
+  "HKID4digit": "A123"
 }]

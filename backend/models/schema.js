@@ -42,7 +42,7 @@ const offSkateExerciseSchema = new mongoose.Schema({
 
 // To record athletes current ability
 const athletesCurrentAbilityValueSchema = new mongoose.Schema({
-    athletesName: String,
+    athleteName: String,
     CurrentAbilityValue: [{
         date: { type: Date },
         weight: Number,
@@ -56,7 +56,7 @@ const athletesCurrentAbilityValueSchema = new mongoose.Schema({
 
 // Goals for speed slalom, slide and classic slalom
 const goalsSchema = new mongoose.Schema({
-    athletesName: String,
+    athleteName: String,
     goals: [
         {
             SpeedSlalom: [
@@ -112,11 +112,11 @@ const goalsSchema = new mongoose.Schema({
 
 // Athletes records
 const athletesRecordsSchema = new mongoose.Schema({
-    athletesName: String,
+    athleteName: String,
     //...athletesCurrentAbilityValueSchema.obj, // call the athletesCurrentAbilityValueSchema
     SSRecords: [{
         date: { type: Date },
-        side: { type: String, enum:["L", "R"] },
+        side: { type: String, enum: ["L", "R"] },
         step: Number,
         time12m: Number,
         time: Number,
@@ -126,6 +126,7 @@ const athletesRecordsSchema = new mongoose.Schema({
         endLine: Boolean,
         SSResult: Number,
         notes: String,
+        recordType: { type: String, enum: ["Normal", "Details"] }
     }],
     /*CSRecords: [{ date: { type: Date } , type: Schema.Types.ObjectId, ref: 'ClassicSlalom' }], // call the classicSlalomSchema
     SlideRecords: [{ date: { type: Date } , type: Schema.Types.ObjectId, ref: 'Slide'}], // call the slideSchema

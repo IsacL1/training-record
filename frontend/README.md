@@ -44,3 +44,18 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+## Feature function
+
+Analyze each athlete in Speed Slalom:
+| Athlete Name |       Min      |        Max       |     Average    |
+| ------------ | -------------- | ---------------- | -------------- |
+|  Athlete A   |   SS.12m.min   |   SS.12m.Max     |   SS.12m.Avg   |
+|  Athlete B   |  SS.kicked.min |   SS.kicked.Max  |  SS.kicked.Avg |
+|  Athlete C   |  SS.missed.min |   SS.missed.Max  |  SS.missed.Avg |
+|  Athlete D   | SS.Endline.min |   SS.Endline.Max | SS.Endline.Avg |
+|  Athlete E   | SS.FinTime.min |   SS.FinTim.Max  |  SS.FinTim.Avg |
+
+Battle mode:
+Use **Bi-directional Bar Chart** to compare ability value of two Athletes. 
