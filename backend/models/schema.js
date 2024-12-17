@@ -113,7 +113,6 @@ const goalsSchema = new mongoose.Schema({
 // Athletes records
 const athletesRecordsSchema = new mongoose.Schema({
     athleteName: String,
-    //...athletesCurrentAbilityValueSchema.obj, // call the athletesCurrentAbilityValueSchema
     SSRecords: [{
         date: { type: Date },
         side: { type: String, enum: ["L", "R"] },

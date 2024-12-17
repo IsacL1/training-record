@@ -177,10 +177,12 @@ const AthleteReg = () => {
         const file = event.target.files?.[0];
         if (file) {
             setUploadedFile(file);
+        } else {
+            console.error('No file selected');
         }
     };
 
-    const handleUploadClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleUploadClick = async () => {
         if (!uploadedFile) {
             toast.error('Please select a file to upload!');
             return;
@@ -193,23 +195,23 @@ const AthleteReg = () => {
                 const jsonData = { file: fileData, type: 'application/json' };
                 // const jsonData = JSON.stringify(fileData);
                 console.log(typeof jsonData);
-            try {
-                const response = await axios.post(`http://${serverHost}/api/uploadAthleteInfo`, jsonData, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
+                try {
+                    const response = await axios.post(`http://${serverHost}/api/uploadAthleteInfo`, jsonData, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
 
-                console.log(response.data);
-                toast.success('Athlete information uploaded successfully!');
-            } catch (error) {
-                console.error(error);
-                setUploadError(null);
-                toast.error('Error uploading athlete information!');
+                    console.log(response.data);
+                    toast.success('Athlete information uploaded successfully!');
+                } catch (error) {
+                    console.error(error);
+                    setUploadError(null);
+                    toast.error('Error uploading athlete information!');
+                }
+            } else {
+                console.error('Error reading file');
             }
-        } else {
-            console.error('Error reading file');
-        }
         };
         fileReader.readAsText(uploadedFile);
     };

@@ -1,8 +1,8 @@
+import axios from 'axios';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { SpeedSlalomBasic, SSRdetails } from '../Model/Interface';
-import axios from 'axios';
-import moment from 'moment';
 
 const host = 'localhost:3001';
 
@@ -36,7 +36,7 @@ const SpeedSlalom = () => {
   // Add a state to store the list of athletes
   const [athletes, setAthletes] = useState<string[]>([]);
   const [selectedAthlete, setSelectedAthlete] = useState<string>('');
-  const [showList, setShowList] = useState<boolean>(false);
+  const [, setShowList] = useState<boolean>(false);
   const [showNormal, setShowNormal] = useState(true);
   const [showDetails, setShowDetails] = useState(false);
 
@@ -54,7 +54,7 @@ const SpeedSlalom = () => {
 
     setSpeedSlalomForm({ ...SpeedSlalomBasic, SSResult: parseFloat(SSResult) });
     console.log("SSR", SSResult);
-    
+
 
     // Validate the data
     if (!SpeedSlalomBasic.AthleteName || !SpeedSlalomBasic.date || !SpeedSlalomBasic.time) {
@@ -158,6 +158,18 @@ const SpeedSlalom = () => {
       .then((response) => {
         console.log(response.data);
         toast.success('Data submitted successfully!');
+        setSpeedSlalomForm({
+          AthleteName: '',
+          date: new Date(),
+          time: null,
+          missedCone: null,
+          kickedCone: null,
+          DQ: false,
+          endLine: false,
+          SSResult: null,
+          notes: '',
+          recordType: "Normal"
+        });
       })
       .catch((error) => {
         console.error(error);
@@ -315,11 +327,13 @@ const SpeedSlalom = () => {
               <label className="formLabel col-sm-5 col-form-label">Feet in box: </label>
 
               <div className="formRadio col-sm-2">
-                <input type="radio" name="side col-sm-5" className="" value="L" checked={SSRdetails.side === 'L'} onChange={handleDetailsChange} />
+                <input type="radio" name="side" className="col-sm-5"
+                  value="L" checked={SSRdetails.side === 'L'} onChange={handleDetailsChange} />
                 <label htmlFor="left" className="formLabel col-sm col-form-label">L</label>
               </div>
               <div className="formRadio col-sm-2">
-                <input type="radio" name="side col-sm" className="" value="R" checked={SSRdetails.side === 'R'} onChange={handleDetailsChange} />
+                <input type="radio" name="side" className="col-sm-5"
+                  value="R" checked={SSRdetails.side === 'R'} onChange={handleDetailsChange} />
                 <label htmlFor="right" className="formLabel col-sm col-form-label">R</label>
               </div>
             </div>

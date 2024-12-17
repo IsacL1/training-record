@@ -8,18 +8,19 @@ const athletesInfoModel = require('./models/schema.js').athletesInfoModel;
 const app = express();
 
 const cors = require('cors');
+const { log } = require('console');
 
-app.use(cors({
-  origin: 'http://localhost:6660', // Allow requests from this origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these methods
-  allowedHeaders: ['Content-Type', 'Accept'], // Allow these headers
-  maxAge: 3600, // Set the maximum age of the CORS configuration
-}));
+// app.use(cors({
+//   origin: 'http://localhost:6660', // Allow requests from this origin
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these methods
+//   allowedHeaders: ['Content-Type', 'Accept'], // Allow these headers
+//   maxAge: 3600, // Set the maximum age of the CORS configuration
+// }));
 
 app.use(express.json());
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:6660');  
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:6660');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Accept');
   next();
@@ -27,24 +28,39 @@ app.use((req, res, next) => {
 
 connectDB();
 
-app.get('/api/data', (req, res) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:6660');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
-  res.json({ data: 'Hello World' });
-});
-
 // get request from mongoDB
-app.get('/api/getSSRecord', async (req, res) => {
-  await athletesRecordsModel.find({}).then(function (athletesRecords) {
-    res.json(athletesRecords);
-  }).catch((err) => {
-    console.error(err);
-    res.status(500).json({ message: 'Error fetching data' });
+// backend/server.js
+app.get('/api/getSSRecords', async (req, res) => {
+  try {
+    const type = req.query.recordType;
+    console.log(type);
+    const records = await athletesRecordsModel.find({ "SSRecords.recordType": type }).populate('SSRecords');
+    console.log(records);
+    const AthletesSSRecordsData = {};
+  // const filteredData = athletesSSRecordsData.filter(record => record.recordType === recordType);
+ 
 
-  });
+    records.forEach(record => {
+      const athleteName = record.athleteName;
+      const SSRecords = record.SSRecords;
+      console.log("L:", SSRecords);
+
+      if (!AthletesSSRecordsData[athleteName]) {
+        AthletesSSRecordsData[athleteName] = [];
+        AthletesSSRecordsData[SSRecords] = [];
+      }
+      AthletesSSRecordsData[athleteName].push(...record.SSRecords);
+      //console.log(AthletesSSRecordsData);
+    });
+
+    res.json(AthletesSSRecordsData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching data' });
+  }
 });
 
+// Get all athletes information
 app.get('/api/getAthletesInfo', async (req, res) => {
   await athletesInfoModel.find({}).then(function (athletesRecord) {
     res.json(athletesRecord);
@@ -54,6 +70,8 @@ app.get('/api/getAthletesInfo', async (req, res) => {
   });
 });
 
+
+// Get athletes names
 app.get('/api/getAthletesInfo/athletes', async (req, res) => {
   try {
     const athletes = await athletesInfoModel.find().select('athleteName');
@@ -104,7 +122,7 @@ app.post('/api/addSSRecord', async (req, res) => {
       console.log(newSSRecord);
       athlete.SSRecords.push(newSSRecord); // Add the new Speed Slalom record to the athlete's existing records
       await athlete.save().then(() => {
-        console.log('Records updated successfully!');
+        console.log('Records ', newSSRecord, 'updated successfully!');
       });
 
     } else {

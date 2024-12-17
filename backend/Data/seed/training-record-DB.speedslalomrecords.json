@@ -8,11 +8,12 @@
         "step": 8,
         "time": 5.320,
         "missedCone": 0,
-        "kickCone": 5,
+        "kickedCone": 5,
         "DQ": true,
         "endLine": false,
-        "result": 6.320,
-        "notes": ""
+        "SSResult": 6.320,
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-11-23",
@@ -20,11 +21,12 @@
         "step": 9,
         "time": 5.500,
         "missedCone": 0,
-        "kickCone": 5,
+        "kickedCone": 5,
         "DQ": true,
         "endLine": false,
-        "result": 6.500,
-        "notes": ""
+        "SSResult": 6.500,
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-11-23",
@@ -32,11 +34,12 @@
         "step": 9,
         "time": 5.240,
         "missedCone": 0,
-        "kickCone": 3,
+        "kickedCone": 3,
         "DQ": false,
         "endLine": false,
-        "result": 5.840,
-        "notes": ""
+        "SSResult": 5.840,
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-11-23",
@@ -44,11 +47,12 @@
         "step": 9,
         "time": 5.240,
         "missedCone": 1,
-        "kickCone": 4,
+        "kickedCone": 4,
         "DQ": true,
         "endLine": false,
-        "result": 6.240,
-        "notes": ""
+        "SSResult": 6.240,
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-11-23",
@@ -56,11 +60,12 @@
         "step": 9,
         "time": 5.170,
         "missedCone": 0,
-        "kickCone": 1,
+        "kickedCone": 1,
         "DQ": false,
         "endLine": false,
-        "result": 5.370,
-        "notes": ""
+        "SSResult": 5.370,
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-11-23",
@@ -68,11 +73,12 @@
         "step": 9,
         "time": 5.040,
         "missedCone": 0,
-        "kickCone": 1,
+        "kickedCone": 1,
         "DQ": false,
         "endLine": false,
-        "result": 5.240,
-        "notes": ""
+        "SSResult": 5.240,
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-11-23",
@@ -80,11 +86,12 @@
         "step": 9,
         "time": 5.550,
         "missedCone": 0,
-        "kickCone": 2,
+        "kickedCone": 2,
         "DQ": false,
         "endLine": false,
-        "result": 5.950,
-        "notes": ""
+        "SSResult": 5.950,
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-11-23",
@@ -92,11 +99,12 @@
         "step": 9,
         "time": 5.700,
         "missedCone": 5,
-        "kickCone": 2,
+        "kickedCone": 2,
         "DQ": true,
         "endLine": false,
-        "result": 5.950,
-        "notes": ""
+        "SSResult": 5.950,
+        "notes": "",
+        "recordType": "Details"
       }
     ]
   },
@@ -118,7 +126,8 @@
         "DQ": false,
         "endLine": false,
         "SSResult": 6.78,
-        "notes": ""
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-12-11T12:01:47.941Z",
@@ -130,7 +139,8 @@
         "DQ": false,
         "endLine": false,
         "SSResult": 5.78,
-        "notes": ""
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-12-11T12:01:47.941Z",
@@ -142,7 +152,8 @@
         "DQ": false,
         "endLine": false,
         "SSResult": 6.809,
-        "notes": ""
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-12-11T12:01:47.941Z",
@@ -154,7 +165,8 @@
         "DQ": false,
         "endLine": false,
         "SSResult": 6.84,
-        "notes": ""
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-12-11T12:01:47.941Z",
@@ -166,7 +178,8 @@
         "DQ": false,
         "endLine": false,
         "SSResult": 7.126,
-        "notes": ""
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-12-11T12:01:47.941Z",
@@ -178,7 +191,8 @@
         "DQ": false,
         "endLine": false,
         "SSResult": 6.971,
-        "notes": ""
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-12-11T12:01:47.941Z",
@@ -190,7 +204,8 @@
         "DQ": false,
         "endLine": false,
         "SSResult": 6.924,
-        "notes": ""
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-12-11T12:01:47.941Z",
@@ -202,7 +217,8 @@
         "DQ": false,
         "endLine": false,
         "SSResult": 7.126,
-        "notes": ""
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-12-11T12:01:47.941Z",
@@ -214,7 +230,8 @@
         "DQ": false,
         "endLine": false,
         "SSResult": 6.924,
-        "notes": ""
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-12-11T12:01:47.941Z",
@@ -226,7 +243,8 @@
         "DQ": false,
         "endLine": false,
         "SSResult": 6.809,
-        "notes": ""
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-12-11T12:01:47.941Z",
@@ -238,7 +256,8 @@
         "DQ": false,
         "endLine": false,
         "SSResult": 6.84,
-        "notes": ""
+        "notes": "",
+        "recordType": "Details"
       },
       {
         "date": "2024-12-11T12:01:47.941Z",
@@ -250,7 +269,8 @@
         "DQ": false,
         "endLine": false,
         "SSResult": 6.971,
-        "notes": ""
+        "notes": "",
+        "recordType": "Details"
       }
     ]
   }

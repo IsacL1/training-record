@@ -215,7 +215,7 @@ body {
 	overflow-x: hidden;
 	background: #3dd8db;
 	color: white;
-	//font: 1em/1.4 "lato";
+	font: 1em/1.4 "lato";
 }
 
 // main body
@@ -237,13 +237,14 @@ main {
 
 	.container {
 		.form {
-			//font: 1em sans-serif;
+			font: 1em sans-serif;
 			font-weight: bold;
 			//background-color: #000000;
 			padding: 2rem 1rem 0 1rem;
 			border: 1px solid #ffffff;
 			border-radius: 50px;
 			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			text-align: center;
 
 			.formContent {
 				margin: 0 20px 20px 0;
@@ -266,6 +267,7 @@ main {
 
 				.formLabel-Result {
 					color: yellow;
+					font-size: 2rem;
 				}
 
 				.inputBox {
@@ -358,7 +360,7 @@ article {
 }
 
 h1 {
-//	font: 2.5em/1.4 "roboto condensed";
+	font: 2.5em/1.4 "roboto condensed";
 	font-weight: 700;
 }
 

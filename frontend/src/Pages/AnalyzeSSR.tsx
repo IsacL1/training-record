@@ -1,78 +1,211 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { SpeedSlalomBasic } from '../Model/Interface';
+import { useState } from 'react';
+import { SSRdetails } from '../Model/Interface';
 
+import { CiFilter } from "react-icons/ci";
+
+import moment from 'moment';
+import "../Style/AnalyzeSSR.scss";
 const host = 'localhost:3001';
-interface Props {
-    speedSlalomRecords: SpeedSlalomBasic[];
+
+interface AthletesSSRecordsData {
+  [athleteName: string]: SSRdetails[];
 }
 
 const AnalyzeSSR = () => {
-    const [SSRecords, setSSRecords] = useState<SpeedSlalomBasic[]>([]);
-    const [athletesData, setAthletesData] = useState<any>({});
+  const [AthletesSSRecordsData, setAthletesSSRecordsData] = useState<AthletesSSRecordsData>({});
 
+  const [showNormal, setShowNormal] = useState(true);
+  const [showDetails, setShowDetails] = useState(false);
 
-    useEffect(() => {
-        axios.get(`http://${host}/api/getSSRecord`)
-            .then(response => {
-                setSSRecords(response.data);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, []);
+  const [sortKey, setSortKey] = useState('');
+  const [sortOrder, setSortOrder] = useState('asc');
 
-    useEffect(() => {
-        if (SSRecords.length > 0) {
-            const athletesData: { [key: string]: any } = {};
-            SSRecords.forEach(record => {
-                const athleteName = record.AthleteName;
-                if (!athletesData[athleteName]) {
-                    athletesData[athleteName] = {
-                        'SS.12m.min': Infinity,
-                        'SS.12m.Max': -Infinity,
-                        'SS.12m.Avg': 0,
-                        'SS.kicked.min': Infinity,
-                        'SS.kicked.Max': -Infinity,
-                        'SS.kicked.Avg': 0,
-                        'SS.missed.min': Infinity,
-                        'SS.missed.Max': -Infinity,
-                        'SS.missed.Avg': 0,
-                    };
-                }
-                //     athletesData[athleteName]['SS.12m.min'] = Math.min(athletesData[athleteName]['SS.12m.min'], SSRecords.time12m);
-                //     athletesData[athleteName]['SS.12m.Max'] = Math.max(athletesData[athleteName]['SS.12m.Max'], SSRecords.time12m);
-                //     athletesData[athleteName]['SS.12m.Avg'] += record.time12m;
-                //     athletesData[athleteName]['SS.kicked.min'] = Math.min(athletesData[athleteName]['SS.kicked.min'], SSRecords.kickedCone);
-                //     athletesData[athleteName]['SS.kicked.Max'] = Math.max(athletesData[athleteName]['SS.kicked.Max'], SSRecords.kickedCone);
-                //     athletesData[athleteName]['SS.kicked.Avg'] += record.kickedCone;
-                //     athletesData[athleteName]['SS.missed.min'] = Math.min(athletesData[athleteName]['SS.missed.min'], SSRecords.missedCone);
-                //     athletesData[athleteName]['SS.missed.Max'] = Math.max(athletesData[athleteName]['SS.missed.Max'], SSRecords.missedCone);
-                //     athletesData[athleteName]['SS.missed.Avg'] += record.missedCone;
-                //     athletesData[athleteName]['SS.Endline.min'] = Math.min(athletesData[athleteName]['SS.Endline.min'], SSRecords.endLine ? 1 : 0);
-                //     athletesData[athleteName]['SS.Endline.Max'] = Math.max(athletesData[athleteName]['SS.Endline.Max'], SSRecords.endLine ? 1 : 0);
-                //     athletesData[athleteName]['SS.Endline.Avg'] += record.endLine ? 1 : 0;
-                //     athletesData[athleteName]['SS.FinTime.min'] = Math.min(athletesData[athleteName]['SS.FinTime.min'], SSRecords.time);
-                //     athletesData[athleteName]['SS.FinTim.Max'] = Math.max(athletesData[athleteName]['SS.FinTim.Max'], SSRecords.time);
-                //     athletesData[athleteName]['SS.FinTim.Avg'] += record.time;
-                // });
-                // Object.keys(athletesData).forEach(athleteName => {
-                //     athletesData[athleteName]['SS.12m.Avg'] /= SSRecords.filter(record => record.AthleteName === athleteName).length;
-                //     athletesData[athleteName]['SS.kicked.Avg'] /= SSRecords.filter(record => record.AthleteName === athleteName).length;
-                //     athletesData[athleteName]['SS.missed.Avg'] /= SSRecords.filter(record => record.AthleteName === athleteName).length;
-                //     athletesData[athleteName]['SS.Endline.Avg'] /= SSRecords.filter(record => record.AthleteName === athleteName).length;
-                //     athletesData[athleteName]['SS.FinTim.Avg'] /= SSRecords.filter(record => record.AthleteName === athleteName).length;
+  const getSSRecordsNormal = () => {
+    setShowNormal(true);
+    setShowDetails(false);
+    axios.get(`http://${host}/api/getSSRecords?recordType=Normal`)
+      .then(response => {
+        setAthletesSSRecordsData(response.data);
+        console.log(AthletesSSRecordsData.athleteName);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
 
+  const getSSRecordsDetails = () => {
+    setShowNormal(false);
+    setShowDetails(true);
+    axios.get(`http://${host}/api/getSSRecords?recordType=Details`)
+      .then(response => {
+        setAthletesSSRecordsData(response.data);
+        console.log(AthletesSSRecordsData.athleteName);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  const thElements = document.querySelectorAll('th[data-sort]');
+
+  thElements.forEach((th) => {
+    th.addEventListener('click', () => {
+      const sortKey = th.getAttribute('data-sort') || '';
+      handleSort(sortKey);
+    });
+  });
+
+  const handleSort = (key: string) => {
+    if (sortKey === key) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortKey(key);
+      setSortOrder('asc');
+    }
+
+    const sortedRecords = Object.entries(AthletesSSRecordsData).map(([athleteName, records]) => {
+      if (key === 'athleteName') {
+        return [athleteName, records];
+      } else {
+        return [
+          // athleteName,
+          records.sort((a, b) => {
+            const aValue = a[key as keyof SSRdetails];
+            const bValue = b[key as keyof SSRdetails];
+
+            if (aValue === undefined || bValue === undefined) {
+              return 0;
             }
-            );
-        }
-    })
-    return (
-        <div>
-            <h1>SSR Analysis</h1>
-            <p>SSR Analysis</p>
-        </div>
-    );
+
+            if (typeof aValue === 'number' && typeof bValue === 'number') {
+              if (sortOrder === 'asc') {
+                return aValue < bValue ? -1 : 1;
+              } else {
+                return aValue > bValue ? -1 : 1;
+              }
+            } else if (typeof aValue === 'string' && typeof bValue === 'string') {
+              const aValueLower = aValue.toLowerCase();
+              const bValueLower = bValue.toLowerCase();
+
+              if (sortOrder === 'asc') {
+                return aValueLower.localeCompare(bValueLower);
+              } else {
+                return bValueLower.localeCompare(aValueLower);
+              }
+            } else if (typeof aValue === 'boolean' && typeof bValue === 'boolean') {
+              if (sortOrder === 'asc') {
+                return aValue ? 1 : -1;
+              } else {
+                return aValue ? -1 : 1;
+              }
+            } else if (aValue instanceof Date && bValue instanceof Date) {
+              if (sortOrder === 'asc') {
+                return aValue.getTime() < bValue.getTime() ? -1 : 1;
+              } else {
+                return aValue.getTime() > bValue.getTime() ? -1 : 1;
+              }
+
+            } else {
+              throw new Error(`Invalid value type for sort key ${sortKey}`);
+            }
+          }),
+        ];
+      }
+    });
+
+    // setAthletesSSRecordsData(
+    //   sortedRecords.reduce((acc: { [key: string]: SSRdetails[] }, [athleteName, records]) => {
+    //     acc[athleteName] = records;
+    //     return acc;
+    //   }, {})
+    // );
+
+  };
+
+  return (
+    <div className='main'>
+      <button onClick={getSSRecordsNormal}>Request Normal SSRecords</button>
+      <button onClick={getSSRecordsDetails}>Request Details SSRecords</button>
+      <h1 className='title'>SSR</h1>
+      <div className='container'>
+        <table className="table" >
+          <thead className='table-head'>
+            <tr className='table-tr'>
+              {/* Date sorting cannot work now */}
+              <th className='table-th'>
+                <label>Date<button onClick={() => handleSort('date')} className="sort-button"><CiFilter /></button></label>
+              </th>
+              <th className='table-th'>
+                <label>Athlete</label>
+              </th>
+              <th className='table-th'>
+                <label>Time<button onClick={() => handleSort('time')} className="sort-button"><CiFilter /></button></label>
+              </th>
+              <th className='table-th'>
+                <label>Missed Cone<button onClick={() => handleSort('missedCone')} className="sort-button"><CiFilter /></button></label>
+              </th>
+              <th className='table-th'>
+                <label>Kicked Cone<button onClick={() => handleSort('kickedCone')} className="sort-button"><CiFilter /></button></label>
+              </th>
+              <th className='table-th'>
+                <label>DQ<button onClick={() => handleSort('DQ')} className="sort-button"><CiFilter /></button></label>
+              </th>
+              <th className='table-th'>
+                <label>End Line<button onClick={() => handleSort('endLine')} className="sort-button"><CiFilter /></button></label>
+              </th>
+              <th className='table-th'>
+                <label>SSResult<button onClick={() => handleSort('SSResult')} className="sort-button"><CiFilter /></button></label>
+              </th>
+              <th className='table-th'>
+                <label>Notes<button onClick={() => handleSort('notes')} className="sort-button"><CiFilter /></button></label>
+              </th>
+            </tr>
+          </thead>
+          {showNormal && (
+            <tbody className='table-body'>
+              {Object.entries(AthletesSSRecordsData).map(([athleteName, records]) => (
+                records.map((SSRecords, recordIndex) => (
+                  <tr key={`${athleteName}-${recordIndex}`}>
+                    <td className='SSR-td'>{moment(SSRecords.date).format('YYYY-MM-DD')}</td>
+                    <td className='SSR-td'>{athleteName}</td>
+                    <td className='SSR-td'>{SSRecords.time}</td>
+                    <td className='SSR-td'>{SSRecords.missedCone}</td>
+                    <td className='SSR-td'>{SSRecords.kickedCone}</td>
+                    <td className='SSR-td'>{SSRecords.DQ.toString()}</td>
+                    <td className='SSR-td'>{SSRecords.endLine.toString()}</td>
+                    <td className='SSR-td'>{SSRecords.SSResult}</td>
+                    <td className='SSR-td'>{SSRecords.notes}</td>
+                  </tr>
+                ))
+              ))}
+            </tbody>
+          )}
+
+          {showDetails && (
+            <tbody className='table-body'>
+              {Object.entries(AthletesSSRecordsData).map(([athleteName, records]) => (
+                records.map((SSRecords, recordIndex) => (
+                  <tr key={`${athleteName}-${recordIndex}`}>
+                    <td className='SSR-td'>{moment(SSRecords.date).format('YYYY-MM-DD')}</td>
+                    <td className='SSR-td'>{athleteName}</td>
+                    <td className='SSR-td'>{SSRecords.time}</td>
+                    <td className='SSR-td'>{SSRecords.missedCone}</td>
+                    <td className='SSR-td'>{SSRecords.kickedCone}</td>
+                    <td style={{ color: SSRecords.DQ ? 'red' : 'black' }}>
+                      {SSRecords.DQ.toString()}
+                    </td>
+                    <td className='SSR-td'>{SSRecords.endLine.toString()}</td>
+                    <td className='SSR-td'>{SSRecords.SSResult}</td>
+                    <td className='SSR-td'>{SSRecords.notes}</td>
+                  </tr>
+                ))
+              ))}
+            </tbody>
+          )}
+        </table>
+      </div></div>
+  );
 }
 
 export default AnalyzeSSR;
